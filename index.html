@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karaoke Panel (Machine Style)</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="dev-topbar">
+      <div class="brand">
+        <div>
+          <div class="title">KARAOKE CONTROL PANEL</div>
+          <div class="subtitle">LangChain 기반 자연어 패널 조작</div>
+        </div>
+      </div>
+      <div class="conn">
+        <span class="pill" id="connPill">API: DISCONNECTED</span>
+        <button class="btn ghost" id="btnPing" type="button">Ping</button>
+        <button class="btn ghost" id="btnReset" type="button">Reset</button>
+      </div>
+    </header>
+
+    <div class="machine-wrapper">
+      <div class="machine-body">
+        <div class="machine-main">
+          <div class="machine-left">
+            <div class="btn-grid">
+              <button class="hw-btn" data-cmd="키 올려줘">▲ 음정</button>
+              <button class="hw-btn" data-cmd="키 내려줘">▼ 음정</button>
+
+              <button class="hw-btn" data-cmd="템포 1 올려">▲ 템포</button>
+              <button class="hw-btn" data-cmd="템포 1 낮춰줘">▼ 템포</button>
+
+              <button class="hw-btn blue" data-cmd="자막 한국어">
+                자막 KOR
+              </button>
+              <button class="hw-btn blue" id="btnMrOn" data-cmd="MR 모드 켜">
+                MR ON
+              </button>
+              <button class="hw-btn blue" data-cmd="자막 영어">자막 ENG</button>
+
+              <button class="hw-btn blue" id="btnMrOff" data-cmd="MR 해제">
+                MR OFF
+              </button>
+            </div>
+          </div>
+
+          <div class="machine-center">
+            <div class="screen-bezel">
+              <div class="screen">
+                <div class="screen-top">
+                  <div>
+                    <span class="badge" id="vBrand">TJ</span>
+                    <span class="badge" id="vModel">B80</span>
+                  </div>
+                  <span class="status-play" id="vPlay">STOP</span>
+                  <div>
+                    <span class="info-text" id="vTime">0 min</span>
+                    <span class="info-text"
+                      >COIN: <span id="vCoins">0</span></span
+                    >
+                  </div>
+                </div>
+
+                <div class="screen-status-bar">
+                  <span class="status-item"
+                    >음정(PITCH):
+                    <span id="pitchVal" class="hl-text">0</span></span
+                  >
+                  <span class="status-item"
+                    >템포(TEMPO):
+                    <span id="tempoVal" class="hl-text">0</span></span
+                  >
+                </div>
+
+                <div class="screen-mid">
+                  <div class="queue-display">
+                    <div>[예약] <span id="qReserved"></span></div>
+
+                  </div>
+                </div>
+
+                <div class="screen-bottom">
+                  <div class="meter-group">
+                    <div class="meter">
+                      <span class="meter-label">ECHO</span>
+                      <div class="meter-bar">
+                        <div class="meter-fill" id="mEcho"></div>
+                      </div>
+                      <span class="meter-val" id="mEchoVal">70</span>
+                    </div>
+                    <div class="meter">
+                      <span class="meter-label">MIC</span>
+                      <div class="meter-bar">
+                        <div class="meter-fill" id="mMic"></div>
+                      </div>
+                      <span class="meter-val" id="mMicVal">70</span>
+                    </div>
+                  </div>
+                  <div class="meter-group">
+                    <div class="meter">
+                      <span class="meter-label">INST</span>
+                      <div class="meter-bar">
+                        <div class="meter-fill" id="mInst"></div>
+                      </div>
+                      <span class="meter-val" id="mInstVal">60</span>
+                    </div>
+                    <div class="meter">
+                      <span class="meter-label">MELODY</span>
+                      <div class="meter-bar">
+                        <div class="meter-fill" id="mMelody"></div>
+                      </div>
+                      <span class="meter-val" id="mMelodyVal">70</span>
+                    </div>
+                  </div>
+                  <div class="chip-row">
+                    <span class="chip" id="chipLang">KOR</span>
+                    <span class="chip" id="chipReverb">Hall</span>
+                    <span class="chip" id="chipMR">MR: OFF</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-console">
+              <div class="chat-hint" id="statusHint">
+                마이크에 대고 말하듯 자연어로 명령하세요.
+              </div>
+              <div class="cmd-row">
+                <input
+                  id="cmdInput"
+                  type="text"
+                  placeholder="예: 키 2개 올려주고 예약 1234 해줘"
+                />
+                <button class="hw-btn chat-send" id="btnSend" type="button">
+                  전송
+                </button>
+                <button class="hw-btn chat-send" id="btnMic" type="button">
+                  🎙️
+                </button>
+                <button class="hw-btn chat-send" id="btnStopMic" type="button">
+                  ⏹
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="machine-right">
+            <input
+              id="songNumber"
+              type="number"
+              class="song-num-input"
+              placeholder="곡 번호"
+              min="0"
+            />
+
+            <div class="numpad">
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '1'"
+              >
+                1
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '2'"
+              >
+                2
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '3'"
+              >
+                3
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '4'"
+              >
+                4
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '5'"
+              >
+                5
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '6'"
+              >
+                6
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '7'"
+              >
+                7
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '8'"
+              >
+                8
+              </button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '9'"
+              >
+                9
+              </button>
+              <button class="hw-btn red" data-cmd="정지">취소</button>
+              <button
+                class="hw-btn num"
+                onclick="document.getElementById('songNumber').value += '0'"
+              >
+                0
+              </button>
+              <button class="hw-btn green" id="btnPlay">시작</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="gold-line"></div>
+
+        <div class="machine-bottom">
+          <div class="knob-section knobs-4">
+            <!-- ECHO -->
+            <div class="knob-wrapper">
+              <div class="knob-ring">ECHO <span id="echoVal">50</span></div>
+
+              <div
+                class="dial"
+                data-input="echo"
+                data-value="echoVal"
+                aria-label="Echo dial"
+              >
+                <div class="dial-tick"></div>
+                <div class="dial-pointer"></div>
+              </div>
+
+              <input id="echo" type="range" min="0" max="100" step="1" />
+            </div>
+
+            <!-- MIC -->
+            <div class="knob-wrapper">
+              <div class="knob-ring">MIC <span id="micVal">70</span></div>
+
+              <div
+                class="dial"
+                data-input="mic"
+                data-value="micVal"
+                aria-label="Mic dial"
+              >
+                <div class="dial-tick"></div>
+                <div class="dial-pointer"></div>
+              </div>
+
+              <input id="mic" type="range" min="0" max="100" step="1" />
+            </div>
+
+            <!-- INST -->
+            <div class="knob-wrapper">
+              <div class="knob-ring">INST <span id="instVal">60</span></div>
+
+              <div
+                class="dial"
+                data-input="inst"
+                data-value="instVal"
+                aria-label="Inst dial"
+              >
+                <div class="dial-tick"></div>
+                <div class="dial-pointer"></div>
+              </div>
+
+              <input id="inst" type="range" min="0" max="100" step="1" />
+            </div>
+
+            <!-- MELODY (추가) -->
+            <div class="knob-wrapper">
+              <div class="knob-ring">
+                MELODY <span id="melodyDialVal">50</span>
+              </div>
+
+              <div
+                class="dial"
+                data-input="melodyDial"
+                data-value="melodyDialVal"
+                aria-label="Melody dial"
+              >
+                <div class="dial-tick"></div>
+                <div class="dial-pointer"></div>
+              </div>
+
+              <input id="melodyDial" type="range" min="0" max="100" step="1" />
+            </div>
+          </div>
+          <div class="reserve-actions">
+            <div class="row">
+              <button class="hw-btn small" id="btnPriority">우선예약</button>
+              <button class="hw-btn small orange" id="btnReserve">예약</button>
+            </div>
+            <div class="row">
+              <button class="hw-btn small black" id="btnCancelPriority">
+                우선취소
+              </button>
+              <button class="hw-btn small black" id="btnCancelReserve">
+                예약취소
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="dev-panel">
+      <div class="dev-grid">
+        <div class="card">
+          <div class="card-head">
+            LLM Response <span class="pill" id="changedPill">changed: -</span>
+          </div>
+          <textarea id="resultJson" spellcheck="false"></textarea>
+          <button class="btn" id="btnApplyResponse" type="button" disabled>
+            Apply Response
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            origin_status JSON
+            <button class="btn ghost sm" id="btnCopyJson">Copy</button>
+          </div>
+          <textarea id="originJson" spellcheck="false"></textarea>
+        </div>
+
+        <div class="card hidden-sliders" style="display: none">
+          <input id="pitch" type="range" min="-6" max="6" step="1" />
+          <input id="tempo" type="range" min="-5" max="5" step="1" />
+          <input id="melody" type="range" min="0" max="100" step="1" />
+          <select id="reverb">
+            <option value="Room">Room</option>
+            <option value="Hall" selected>Hall</option>
+            <option value="Stage">Stage</option>
+            <option value="None">None</option>
+          </select>
+          <button class="btn ghost" id="btnApplyLocal" type="button">
+            Apply to Origin
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

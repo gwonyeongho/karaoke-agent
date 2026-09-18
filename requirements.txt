@@ -1,0 +1,9 @@
+langchain==1.2.7
+langchain-ollama==1.0.1
+langchain-community==0.4.1
+
+uvicorn==0.38.0
+fastapi==0.121.0
+
+python-multipart==0.0.22
+faster-whisper==1.2.1

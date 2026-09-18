@@ -1,0 +1,600 @@
+:root {
+  --bg: #111418;
+  --machine-bg: linear-gradient(135deg, #0f1c40 0%, #162a63 45%, #0b1530 100%);
+  --machine-border: #080c1f;
+  --gold: linear-gradient(90deg, #b8860b, #ffd700, #b8860b);
+
+  --btn-bg: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+  --btn-blue: linear-gradient(180deg, #b0c4de 0%, #87cefa 100%);
+  --btn-red: linear-gradient(180deg, #ff6b6b 0%, #d11111 100%);
+  --btn-green: linear-gradient(180deg, #51e089 0%, #17b355 100%);
+  --btn-orange: linear-gradient(180deg, #ffb347 0%, #ff7f00 100%);
+  --btn-black: linear-gradient(180deg, #444 0%, #111 100%);
+
+  --screen-bg: #0a0e17;
+  --text-glowing: #6ee7ff;
+  --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --sans: "Noto Sans KR", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === 상단 상태바 === */
+.dev-topbar {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+.dev-topbar .title {
+  font-weight: 800;
+  font-size: 14px;
+  color: #fff;
+}
+.dev-topbar .subtitle {
+  font-size: 12px;
+  color: #aaa;
+}
+.conn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* === 노래방 기계 외관 === */
+.machine-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  background: #222;
+  padding: 10px;
+  border-radius: 24px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.8),
+    inset 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+.machine-body {
+  background: var(--machine-bg);
+  border-radius: 16px;
+  border: 4px solid var(--machine-border);
+  padding: 30px 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.machine-main {
+  display: grid;
+  grid-template-columns: 260px 1fr 260px;
+  gap: 20px;
+  align-items: center;
+}
+
+/* === 좌측 버튼부 === */
+.machine-left .btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* === 우측 번호판 === */
+.machine-right {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.song-num-input {
+  width: 100%;
+  padding: 12px;
+  background: #000;
+  color: #0f0;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 20px;
+  text-align: right;
+  letter-spacing: 2px;
+}
+.song-num-input::-webkit-outer-spin-button,
+.song-num-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* === 하드웨어 버튼 스타일 === */
+.hw-btn {
+  background: var(--btn-bg);
+  border: none;
+  border-radius: 6px;
+  color: #111;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 12px 0;
+  cursor: pointer;
+  box-shadow:
+    0 4px #999,
+    0 6px 10px rgba(0, 0, 0, 0.4);
+  transition: all 0.1s;
+  font-family: var(--sans);
+}
+.hw-btn:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 0 #999,
+    0 2px 5px rgba(0, 0, 0, 0.4);
+}
+.hw-btn.blue {
+  background: var(--btn-blue);
+  box-shadow:
+    0 4px #5b8db8,
+    0 6px 10px rgba(0, 0, 0, 0.4);
+}
+.hw-btn.blue:active {
+  box-shadow: 0 0 #5b8db8;
+}
+.hw-btn.red {
+  background: var(--btn-red);
+  color: white;
+  box-shadow: 0 4px #8b0000;
+}
+.hw-btn.red:active {
+  box-shadow: 0 0 #8b0000;
+}
+.hw-btn.green {
+  background: var(--btn-green);
+  color: white;
+  box-shadow: 0 4px #0a7031;
+}
+.hw-btn.green:active {
+  box-shadow: 0 0 #0a7031;
+}
+.hw-btn.orange {
+  background: var(--btn-orange);
+  color: white;
+  box-shadow: 0 4px #cc6600;
+}
+.hw-btn.orange:active {
+  box-shadow: 0 0 #cc6600;
+}
+.hw-btn.black {
+  background: var(--btn-black);
+  color: white;
+  box-shadow: 0 4px #000;
+}
+.hw-btn.black:active {
+  box-shadow: 0 0 #000;
+}
+.hw-btn.num {
+  font-size: 18px;
+  font-family: var(--mono);
+}
+.hw-btn.small {
+  padding: 8px 0;
+  font-size: 12px;
+}
+
+/* === 중앙 화면부 === */
+.screen-bezel {
+  background: #111;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #333;
+  box-shadow: inset 0 0 20px #000;
+  margin-bottom: 15px;
+}
+.screen {
+  background: var(--screen-bg);
+  height: 240px;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(110, 231, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+/* 화면 내부 데이터 */
+.screen-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed #333;
+  padding-bottom: 8px;
+}
+.badge {
+  background: #0044cc;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.status-play {
+  color: #0f0;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+.info-text {
+  font-family: var(--mono);
+  color: var(--text-glowing);
+  font-size: 14px;
+}
+.queue-display {
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.8;
+  color: #ddd;
+}
+.screen-bottom {
+  border-top: 1px dashed #333;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.meter-group {
+  display: flex;
+  gap: 15px;
+}
+.meter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.meter-label {
+  font-size: 10px;
+  color: #aaa;
+  width: 30px;
+}
+.meter-bar {
+  flex: 1;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.meter-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #0f0, #ff0, #f00);
+  transition: width 0.3s;
+}
+.meter-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  width: 20px;
+  text-align: right;
+}
+.chip-row {
+  display: flex;
+  gap: 5px;
+}
+.chip {
+  background: #222;
+  color: #888;
+  padding: 2px 6px;
+  font-size: 10px;
+  border-radius: 4px;
+  border: 1px solid #444;
+}
+.screen-status-bar {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(0, 50, 100, 0.4);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(110, 231, 255, 0.3);
+  margin-top: 5px;
+}
+.status-item {
+  font-size: 11px;
+  color: #aaccff;
+  font-family: var(--mono);
+}
+.hl-text {
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  text-shadow: 0 0 5px #6ee7ff;
+}
+
+/* === 자연어 명령창 (기계 중앙 하단) === */
+.chat-console {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+}
+.chat-hint {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.cmd-row {
+  display: flex;
+  gap: 8px;
+}
+.cmd-row input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #111;
+  color: var(--text-glowing);
+  font-family: var(--sans);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+.chat-send {
+  padding: 0 15px;
+  font-size: 12px;
+  background: linear-gradient(180deg, #555, #222);
+  color: white;
+  border: 1px solid #444;
+}
+
+/* === 하단 노브 & 액션 === */
+.gold-line {
+  height: 4px;
+  background: var(--gold);
+  margin: 25px 0 15px;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+.machine-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+.knob-section {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+.knob-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.knob-ring {
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 2px 4px #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.knob-ring span {
+  color: var(--text-glowing);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+input[type="range"] {
+  accent-color: #6ee7ff;
+  width: 80px;
+  cursor: pointer;
+}
+
+.reserve-actions {
+  display: flex;
+  gap: 10px;
+}
+.reserve-actions .row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 80px;
+}
+
+/* === 개발자 패널 (기계 바깥) === */
+.dev-panel {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 30px;
+}
+.dev-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+pre,
+textarea {
+  width: 100%;
+  height: 120px;
+  background: #000;
+  color: #0f0;
+  border: none;
+  padding: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  border-radius: 6px;
+  resize: none;
+  outline: none;
+}
+.hidden-sliders {
+  display: none; /* 논리 처리를 위해 살려두지만 가림 */
+}
+
+/* 유틸 */
+.btn {
+  padding: 8px 12px;
+  border: 1px solid #444;
+  background: #222;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #333;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.pill {
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: #222;
+  font-size: 10px;
+  border: 1px solid #444;
+}
+
+/* ===== Rotary Dial Knobs ===== */
+
+.knobs-4 {
+  display: flex;
+  gap: 22px;
+  align-items: flex-end;
+}
+
+/* wrapper는 원형 장치처럼 */
+.knob-wrapper {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* range는 값 저장용으로 숨김 */
+.knob-wrapper input[type="range"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 다이얼 본체 */
+.dial {
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.25),
+      rgba(0, 0, 0, 0.55)
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.08),
+      rgba(0, 0, 0, 0.85)
+    );
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 0 22px rgba(0, 0, 0, 0.75),
+    0 12px 22px rgba(0, 0, 0, 0.45);
+}
+
+.dial:active {
+  cursor: grabbing;
+}
+
+/* 바깥쪽 눈금 느낌 */
+.dial-tick {
+  position: absolute;
+  inset: -8px;
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+/* 포인터(현재 각도) */
+.dial-pointer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 34px;
+  transform-origin: 50% 90%;
+  transform: translate(-50%, -90%) rotate(0deg);
+  border-radius: 3px;
+
+  background: linear-gradient(180deg, #6ee7ff, rgba(110, 231, 255, 0.25));
+  box-shadow: 0 0 10px rgba(110, 231, 255, 0.35);
+}
+
+/* 중앙 캡 */
+.dial::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.35),
+    rgba(0, 0, 0, 0.85)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* MR LED 상태 */
+.chip.mr-on {
+  color: #6ee7ff;
+  border: 1px solid #6ee7ff;
+  box-shadow:
+    0 0 6px rgba(110, 231, 255, 0.7),
+    0 0 14px rgba(110, 231, 255, 0.5),
+    inset 0 0 6px rgba(110, 231, 255, 0.3);
+  background: rgba(110, 231, 255, 0.08);
+}
+
+.chip.mr-off {
+  color: #666;
+  border: 1px solid #333;
+  box-shadow: none;
+  background: #111;
+}
