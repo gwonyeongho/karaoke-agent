@@ -17,30 +17,50 @@
 
 모델 경량화 이후에는 사용자의 의도와 다른 명령이 반환되거나 지원 범위를 벗어난 값이 생성될 가능성을 보완했습니다.
 
-- LangChain의 `with_structured_output`을 적용해 모델의 응답을 `KaraokeMachine` 스키마로 제한
-- Pydantic으로 필드 타입과 음정·템포·볼륨 등의 허용 범위를 검증
-- 현재 기기 상태를 명령과 함께 전달해 변경되지 않은 상태를 유지
-- 모호하거나 지원하지 않는 요청은 기존 상태를 유지하도록 시스템 프롬프트에 규칙 명시
-- `temperature=0`을 적용해 같은 조건에서 출력 변동을 줄임
+- LangChain의 `with_structured_output`을 적용해 모델 응답을 `KaraokeMachine` 스키마로 제한
+- Pydantic으로 필드 타입과 음정·템포·볼륨 등의 허용 범위 검증
+- 현재 기기 상태를 명령과 함께 전달해 변경되지 않은 상태 유지
+- 모호하거나 지원하지 않는 요청은 기존 상태를 유지하도록 규칙 설정
+- `temperature=0`을 적용해 같은 조건에서 출력 변동 축소
 
-이를 통해 경량 모델의 빠른 응답을 유지하면서 서비스에서 처리 가능한 형태의 결과만 상태 변경에 사용하도록 구성했습니다. LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구조화된 호출과 출력 연결에 사용했으며 Pydantic과 명령 규칙을 통해 실행 안정성을 보완했습니다.
+LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구조화된 호출과 출력 연결에 사용했습니다. 경량 모델의 빠른 응답을 유지하면서 Pydantic과 명령 규칙으로 실행 안정성을 보완했습니다.
+
+## 현재 처리 흐름
+
+```text
+음성 녹음
+→ faster-whisper 음성 인식
+→ 현재 상태와 명령을 Qwen에 전달
+→ LangChain 구조화 출력
+→ Pydantic 타입·허용값·범위 검증
+→ 검증된 상태를 웹 화면에 반영
+```
+
+전체 상태를 LLM이 다시 생성하는 현재 구조의 한계를 보완하기 위해 LangGraph 기반 전환을 계획하고 있습니다. 자세한 내용은 [LangGraph 전환 계획](./docs/LANGGRAPH_PLAN.md)에서 확인할 수 있습니다.
 
 ## 기술 스택
 
-- Python, FastAPI, Pydantic
-- LangChain, ChatOllama, Ollama, Qwen3 1.7B
-- faster-whisper
-- HTML, CSS, Vanilla JavaScript
+- **Backend:** Python, FastAPI, Pydantic
+- **AI:** LangChain, ChatOllama, Ollama, Qwen3 1.7B
+- **Speech:** faster-whisper
+- **Frontend:** HTML, CSS, Vanilla JavaScript
 
 ## 프로젝트 구조
 
 ```text
 .
-├── main.py           # FastAPI, STT, LLM 명령 처리 및 출력 검증
-├── index.html        # 노래방 제어 화면
-├── app.js            # 상태 관리와 API·음성 입력 연동
-├── style.css         # 화면 스타일
-└── requirements.txt  # Python 의존성
+├── backend/
+│   ├── __init__.py
+│   └── main.py                # FastAPI, STT, LLM 명령 처리와 출력 검증
+├── frontend/
+│   ├── index.html             # 노래방 제어 화면
+│   ├── app.js                 # 상태 관리와 API·음성 입력 연동
+│   └── style.css              # 화면 스타일
+├── docs/
+│   └── LANGGRAPH_PLAN.md      # LangGraph 전환 구현 계획
+├── README.md
+├── TODO.md
+└── requirements.txt
 ```
 
 ## 실행 방법
@@ -77,18 +97,20 @@ python -m pip install -r requirements.txt
 
 ### 3. API 서버 실행
 
+프로젝트 루트에서 실행합니다.
+
 ```bash
-python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 API 문서는 `http://127.0.0.1:8000/docs`에서 확인할 수 있습니다.
 
 ### 4. 웹 화면 실행
 
-새 터미널에서 다음 명령을 실행합니다.
+새 터미널에서 프로젝트 루트를 기준으로 실행합니다.
 
 ```bash
-python -m http.server 5500
+python -m http.server 5500 --directory frontend
 ```
 
 브라우저에서 `http://127.0.0.1:5500`을 엽니다.
@@ -105,13 +127,7 @@ export WHISPER_COMPUTE=int8
 
 GPU 환경에서는 장치와 연산 방식을 실행 환경에 맞게 변경할 수 있습니다.
 
-## 명령 처리 흐름
+## 문서
 
-```text
-음성 녹음
-→ faster-whisper 음성 인식
-→ 현재 상태와 명령을 Qwen에 전달
-→ LangChain 구조화 출력
-→ Pydantic 타입·허용값·범위 검증
-→ 검증된 상태를 웹 화면에 반영
-```
+- [개선 TODO](./TODO.md)
+- [LangGraph 전환 계획](./docs/LANGGRAPH_PLAN.md)
