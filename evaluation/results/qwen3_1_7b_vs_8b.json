@@ -1,0 +1,4242 @@
+{
+  "benchmark_schema_version": 1,
+  "metadata": {
+    "started_at_utc": "2026-09-21T07:07:21.332674+00:00",
+    "finished_at_utc": "2026-09-21T07:30:25.863756+00:00",
+    "total_wall_seconds": 1384.531082,
+    "dataset": "C:\\Users\\SSAFY\\Desktop\\1516024-master\\evaluation\\dataset.json",
+    "dataset_sha256": "5df2ad5e37bef37fbb7c1cc7443c367f79399425059e1abce287f4575ba4c7c7",
+    "models": [
+      "qwen3:1.7b",
+      "qwen3:8b"
+    ],
+    "temperature": 0,
+    "seed": 42,
+    "measured_runs_per_case": 1,
+    "warmup_enabled": true,
+    "warmups": {
+      "command/raw/qwen3:1.7b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 159.32019479999872,
+        "excluded_from_metrics": true
+      },
+      "command/structured/qwen3:1.7b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 4.291991900001449,
+        "excluded_from_metrics": true
+      },
+      "qa/direct/qwen3:1.7b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 7.10666990000027,
+        "excluded_from_metrics": true
+      },
+      "qa/rag/qwen3:1.7b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 8.958106199999747,
+        "excluded_from_metrics": true
+      },
+      "command/raw/qwen3:8b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 35.66870030000064,
+        "excluded_from_metrics": true
+      },
+      "command/structured/qwen3:8b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 15.331665300000168,
+        "excluded_from_metrics": true
+      },
+      "qa/direct/qwen3:8b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 7.320812499998283,
+        "excluded_from_metrics": true
+      },
+      "qa/rag/qwen3:8b": {
+        "performed": true,
+        "success": true,
+        "latency_seconds": 9.143122299999959,
+        "excluded_from_metrics": true
+      }
+    },
+    "setup_seconds_excluded_from_case_latency": {
+      "qa/direct/qwen3:1.7b": 0.05603340000016033,
+      "qa/rag/qwen3:1.7b": 22.011677799997415,
+      "qa/direct/qwen3:8b": 0.06797569999980624,
+      "qa/rag/qwen3:8b": 0.1456919000011112
+    },
+    "ollama_host": "http://127.0.0.1:11434",
+    "ollama_models": {
+      "qwen3:1.7b": {
+        "name": "qwen3:1.7b",
+        "model": "qwen3:1.7b",
+        "modified_at": "2026-09-21T15:40:03.7710915+09:00",
+        "size": 1359293444,
+        "digest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "2.0B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 40960,
+          "embedding_length": 2048
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "thinking"
+        ]
+      },
+      "qwen3:8b": {
+        "name": "qwen3:8b",
+        "model": "qwen3:8b",
+        "modified_at": "2026-09-21T15:58:33.687723+09:00",
+        "size": 5225388164,
+        "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "8.2B",
+          "quantization_level": "Q4_K_M",
+          "context_length": 40960,
+          "embedding_length": 4096
+        },
+        "capabilities": [
+          "completion",
+          "tools",
+          "thinking"
+        ]
+      }
+    },
+    "python": "3.11.15 (main, Aug  7 2026, 02:24:19) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "git": {
+      "commit": "3386110ec7f67d7c86af37741ffcff64cb5ec79e",
+      "branch": "feat/rag-side-assistant",
+      "dirty": true
+    },
+    "rescored_at_utc": "2026-09-21T07:32:50.408764+00:00",
+    "model_calls_reused": true,
+    "rescore_source": "C:\\Users\\SSAFY\\Desktop\\1516024-master\\evaluation\\results\\qwen3_1.json",
+    "rescore_note": "No model calls were repeated. Preserved answers were re-scored after adding '-6에서' as an equivalent correct phrasing for the pitch range."
+  },
+  "methodology": {
+    "command_accuracy": "All expected dotted-path values match and no other state leaf differs from origin; invalid/no-op cases require zero mutations.",
+    "json_validity": "A JSON object can be decoded from model output (including one fenced/object substring).",
+    "schema_validity": "The decoded/structured object validates as backend.main.KaraokeMachine with Pydantic.",
+    "answer_accuracy": "Every gold keyword group has at least one case-insensitive alternative in the answer; refusal cases are excluded.",
+    "retrieval_success": "RAG returned grounded=true and at least one source; answerable cases only.",
+    "source_accuracy": "Every gold source filename appears in returned retrieval metadata; answerable cases only.",
+    "refusal_accuracy": "Answer contains exact policy sentence '제공된 문서에서 확인할 수 없습니다.', grounded=false, and sources are empty; refusal cases only.",
+    "latency": "Client wall time via time.perf_counter; warmups and service/index setup excluded; failures excluded from aggregate latency but retained per case.",
+    "confounds": [
+      "Raw Ollama free-form chat versus the full LangChain structured-output and Pydantic pipeline; this does not test whether LangChain increases intelligence.",
+      "Direct QA versus RAG changes retrieval, context, prompting, score gating, and response packaging together."
+    ]
+  },
+  "summary": {
+    "groups": {
+      "command/raw/qwen3:1.7b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 4.40372852222289,
+          "median_seconds": 4.400834199997917,
+          "p95_seconds": 5.634793600002013
+        },
+        "json_validity": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "schema_validity": {
+          "passed": 8,
+          "applicable": 9,
+          "rate": 0.8888888888888888
+        },
+        "command_accuracy": {
+          "passed": 8,
+          "applicable": 9,
+          "rate": 0.8888888888888888
+        },
+        "no_unintended_mutation": {
+          "passed": 8,
+          "applicable": 8,
+          "rate": 1.0
+        }
+      },
+      "command/raw/qwen3:8b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 16.505156633333375,
+          "median_seconds": 12.78098559999853,
+          "p95_seconds": 35.46595690000322
+        },
+        "json_validity": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "schema_validity": {
+          "passed": 6,
+          "applicable": 9,
+          "rate": 0.6666666666666666
+        },
+        "command_accuracy": {
+          "passed": 6,
+          "applicable": 9,
+          "rate": 0.6666666666666666
+        },
+        "no_unintended_mutation": {
+          "passed": 6,
+          "applicable": 6,
+          "rate": 1.0
+        }
+      },
+      "command/structured/qwen3:1.7b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 4.660181511111457,
+          "median_seconds": 4.7026209000032395,
+          "p95_seconds": 5.361668199999258
+        },
+        "json_validity": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "schema_validity": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "command_accuracy": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "no_unintended_mutation": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        }
+      },
+      "command/structured/qwen3:8b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 16.20538643333364,
+          "median_seconds": 15.177270899999712,
+          "p95_seconds": 24.014904800002114
+        },
+        "json_validity": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "schema_validity": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "command_accuracy": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "no_unintended_mutation": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        }
+      },
+      "qa/direct/qwen3:1.7b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 66.27527308888926,
+          "median_seconds": 3.576287100000627,
+          "p95_seconds": 566.3637627999997
+        },
+        "answer_keyword_accuracy": {
+          "passed": 0,
+          "applicable": 7,
+          "rate": 0.0
+        },
+        "retrieval_success": {
+          "passed": 0,
+          "applicable": 0,
+          "rate": null
+        },
+        "source_accuracy": {
+          "passed": 0,
+          "applicable": 0,
+          "rate": null
+        },
+        "refusal_accuracy": {
+          "passed": 0,
+          "applicable": 0,
+          "rate": null
+        },
+        "observed_refusal_rate": {
+          "passed": 0,
+          "applicable": 9,
+          "rate": 0.0
+        }
+      },
+      "qa/direct/qwen3:8b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 10.614646688890288,
+          "median_seconds": 8.968155800001114,
+          "p95_seconds": 28.566731599999912
+        },
+        "answer_keyword_accuracy": {
+          "passed": 0,
+          "applicable": 7,
+          "rate": 0.0
+        },
+        "retrieval_success": {
+          "passed": 0,
+          "applicable": 0,
+          "rate": null
+        },
+        "source_accuracy": {
+          "passed": 0,
+          "applicable": 0,
+          "rate": null
+        },
+        "refusal_accuracy": {
+          "passed": 0,
+          "applicable": 0,
+          "rate": null
+        },
+        "observed_refusal_rate": {
+          "passed": 0,
+          "applicable": 9,
+          "rate": 0.0
+        }
+      },
+      "qa/rag/qwen3:1.7b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 1.6418974777779012,
+          "median_seconds": 2.1615631000022404,
+          "p95_seconds": 2.4040653000010934
+        },
+        "answer_keyword_accuracy": {
+          "passed": 5,
+          "applicable": 7,
+          "rate": 0.7142857142857143
+        },
+        "retrieval_success": {
+          "passed": 5,
+          "applicable": 7,
+          "rate": 0.7142857142857143
+        },
+        "source_accuracy": {
+          "passed": 5,
+          "applicable": 7,
+          "rate": 0.7142857142857143
+        },
+        "refusal_accuracy": {
+          "passed": 2,
+          "applicable": 2,
+          "rate": 1.0
+        },
+        "observed_refusal_rate": {
+          "passed": 4,
+          "applicable": 9,
+          "rate": 0.4444444444444444
+        }
+      },
+      "qa/rag/qwen3:8b": {
+        "cases": 9,
+        "call_success": {
+          "passed": 9,
+          "applicable": 9,
+          "rate": 1.0
+        },
+        "latency": {
+          "count": 9,
+          "average_seconds": 3.3873115777775333,
+          "median_seconds": 4.227288500002032,
+          "p95_seconds": 9.06040639999992
+        },
+        "answer_keyword_accuracy": {
+          "passed": 5,
+          "applicable": 7,
+          "rate": 0.7142857142857143
+        },
+        "retrieval_success": {
+          "passed": 5,
+          "applicable": 7,
+          "rate": 0.7142857142857143
+        },
+        "source_accuracy": {
+          "passed": 5,
+          "applicable": 7,
+          "rate": 0.7142857142857143
+        },
+        "refusal_accuracy": {
+          "passed": 2,
+          "applicable": 2,
+          "rate": 1.0
+        },
+        "observed_refusal_rate": {
+          "passed": 4,
+          "applicable": 9,
+          "rate": 0.4444444444444444
+        }
+      }
+    },
+    "latency_overhead": {
+      "command/qwen3:1.7b": {
+        "baseline": "raw",
+        "comparison": "structured",
+        "average_seconds_difference": 0.25645298888856694,
+        "average_ratio": 1.058235422005332
+      },
+      "command/qwen3:8b": {
+        "baseline": "raw",
+        "comparison": "structured",
+        "average_seconds_difference": -0.29977019999973464,
+        "average_ratio": 0.9818377852049991
+      },
+      "qa/qwen3:1.7b": {
+        "baseline": "direct",
+        "comparison": "rag",
+        "average_seconds_difference": -64.63337561111136,
+        "average_ratio": 0.024773907390404363
+      },
+      "qa/qwen3:8b": {
+        "baseline": "direct",
+        "comparison": "rag",
+        "average_seconds_difference": -7.227335111112755,
+        "average_ratio": 0.3191167522629678
+      }
+    }
+  },
+  "records": [
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_pitch_increment",
+      "command": "키 한 칸 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "music.pitch": 1
+      },
+      "latency_seconds": 4.269187699999748,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 1,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 1,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "music.pitch"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_pitch_at_upper_bound",
+      "command": "키 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 4.281308800000261,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 6,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_invalid_pitch",
+      "command": "피치를 10으로 설정해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 4.862212300002284,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "상태를 변경하지 말고\n\n{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_reserve_append",
+      "command": "333번 예약해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          111,
+          222,
+          333
+        ]
+      },
+      "latency_seconds": 2.9675365000002785,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": false,
+      "validation_error": "ValidationError: 2 validation errors for KaraokeMachine\nbrand\n  Field required [type=missing, input_value={'queue': {'reserved_song...], 'played_song': None}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\nmodel_name\n  Field required [type=missing, input_value={'queue': {'reserved_song...], 'played_song': None}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+      "output_state": null,
+      "raw_output": "{\n  \"queue\": {\n    \"reserved_songs\": [111, 222, 333],\n    \"played_song\": null\n  }\n}",
+      "expected_fields_correct": false,
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": false
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_priority_reserve",
+      "command": "333번 새치기 예약",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          333,
+          111,
+          222
+        ]
+      },
+      "latency_seconds": 5.634793600002013,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            333,
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      333,\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_cancel_reservation",
+      "command": "예약 취소 111",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ]
+      },
+      "latency_seconds": 4.51605600000039,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_start_reserved",
+      "command": "예약된 곡 시작",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ],
+        "queue.played_song": 111,
+        "is_playing": true
+      },
+      "latency_seconds": 4.633223500000895,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": 111
+        },
+        "is_playing": true,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      222\n    ],\n    \"played_song\": 111\n  },\n  \"is_playing\": true,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "is_playing",
+        "queue.played_song",
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_disable_vocal_cancel",
+      "command": "보컬 살려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": true
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "sound.voice_cancel": false
+      },
+      "latency_seconds": 4.400834199997917,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "sound.voice_cancel"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_unsupported_lights",
+      "command": "무대 조명을 파란색으로 켜줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 4.068404100002226,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "상태를 변경하지 말고  \n{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_pitch_increment",
+      "command": "키 한 칸 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "music.pitch": 1
+      },
+      "latency_seconds": 4.952371800001856,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 1,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 1,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "music.pitch"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_pitch_at_upper_bound",
+      "command": "키 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 4.446014999997715,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 6,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_invalid_pitch",
+      "command": "피치를 10으로 설정해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 4.7026209000032395,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_reserve_append",
+      "command": "333번 예약해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          111,
+          222,
+          333
+        ]
+      },
+      "latency_seconds": 4.277695100001438,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222,
+            333
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222,\n      333\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_priority_reserve",
+      "command": "333번 새치기 예약",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          333,
+          111,
+          222
+        ]
+      },
+      "latency_seconds": 5.361668199999258,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            333,
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      333,\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_cancel_reservation",
+      "command": "예약 취소 111",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ]
+      },
+      "latency_seconds": 4.9582530000006955,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_start_reserved",
+      "command": "예약된 곡 시작",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ],
+        "queue.played_song": 111,
+        "is_playing": true
+      },
+      "latency_seconds": 4.814981200001057,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": 111
+        },
+        "is_playing": true,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": 111,\n    \"reserved_songs\": [\n      222\n    ]\n  },\n  \"is_playing\": true,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "is_playing",
+        "queue.played_song",
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_disable_vocal_cancel",
+      "command": "보컬 살려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": true
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "sound.voice_cancel": false
+      },
+      "latency_seconds": 4.520338499998616,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "sound.voice_cancel"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:1.7b",
+      "case_id": "cmd_unsupported_lights",
+      "command": "무대 조명을 파란색으로 켜줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 3.907689899999241,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_pitch_range",
+      "question": "음정은 최소와 최대로 어디까지 조절할 수 있나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "최소 -6",
+          "-6부터",
+          "-6에서"
+        ],
+        [
+          "최대 6",
+          "6까지"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 6.068063400001847,
+      "call_success": true,
+      "answer": "음정은 일반적으로 최소 250Hz(이하 중간 C)에서 최대 4400Hz(이상 중간 C)까지 조절할 수 있습니다. 이는 피아노, 베이스, 베이스 등 다양한 음향 장비에서 사용되는 기본 범위입니다. 그러나 특정 음향 장비나 음악 장치에서는 이 범위가 다를 수 있습니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_reverb_types",
+      "question": "지원하는 공간 음향 유형을 모두 알려줘.",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "Room"
+        ],
+        [
+          "Hall"
+        ],
+        [
+          "Stage"
+        ],
+        [
+          "None"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 5.996116800000891,
+      "call_success": true,
+      "answer": "지원하는 공간 음향 유형은 다음과 같습니다:  \n1. **흡수형** (음향 흡수 재료, 예: 압력판, 소성체)  \n2. **반사형** (음향 반사 재료, 예: 벽, 금속판)  \n3. **반사-흡수 조합** (음향 반사와 흡수를 조절하는 재료)  \n4. **반사형 흡수** (음향 반사 후 흡수 처리)  \n5. **유도형** (음향 흡수를 유도하는 재료)  \n6. **저주파 흡수** (저주파 음향 처리)  \n7. **고주파 흡수** (고주파 음향 처리)  \n8. **음향 흡수 층** (음향 흡수를 위한 층)  \n9. **음향 반사 층** (음향 반사를 위한 층)  \n10. **음향 흡수-반사 조합** (음향 흡수와 반사를 조절하는 재료)  \n\n이 외에도 특정 음향 환경(예: 공방, 공장)에 맞는 특수 처리 재료가 존재합니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_priority_queue",
+      "question": "우선예약한 곡은 예약 목록의 어디에 들어가나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "앞",
+          "맨 앞"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 3.0531186000007438,
+      "call_success": true,
+      "answer": "예약 목록에서 곡을 추가하면 일반적으로 **예약 날짜 또는 시간 기준으로 정렬**됩니다. 예를 들어, 곡이 10일 후 예약되면 목록의 10일짜음 위치에 추가됩니다. 구체적인 위치는 앱 설정에 따라 다를 수 있습니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_stop_keeps_queue",
+      "question": "빨간 취소 버튼을 누르면 예약 목록 전체가 지워지나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "정지"
+        ],
+        [
+          "예약"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 3.0493606999989424,
+      "call_success": true,
+      "answer": "빨간 취소 버튼을 누르면 예약 목록이 전체 지워지지는 여부는 시스템에 따라 달라집니다. 일반적으로 취소는 확인을 필요로 하며, 확인 후에는 예약 목록이 삭제될 수 있습니다. 하지만 구체적인 동작은 앱이나 시스템의 설정에 따라 다릅니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_api_disconnected",
+      "question": "API가 DISCONNECTED일 때 먼저 확인할 주소는 무엇인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "127.0.0.1:8000/docs",
+          "localhost:8000/docs"
+        ]
+      ],
+      "gold_sources": [
+        "troubleshooting.md"
+      ],
+      "latency_seconds": 3.048692000000301,
+      "call_success": true,
+      "answer": "API가 DISCONNECTED일 때 먼저 확인할 주소는 **서버의 IP 주소**입니다.  \n(예: `http://api.example.com` 또는 `https://api.example.com` 등)",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_audio_limit",
+      "question": "한 번에 올릴 수 있는 음성 녹음 파일의 최대 크기는 얼마인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "15MB",
+          "15 MB"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 3.6542699999990873,
+      "call_success": true,
+      "answer": "한 번에 올릴 수 있는 음성 녹음 파일의 최대 크기는 서비스별로 다를 수 있습니다. 일반적으로 웹사이트나 클라우드 저장소에서는 25MB 미만으로 제한되기도 하며, 고화질 녹음은 파일 크기가 커질 수 있습니다. 약 15분 분량의 음성 녹음은 50MB 미만으로 설정할 수 있습니다. 파일 크기와 품질(비트레이트)은 관련이 있으므로, 필요에 따라 조절해야 합니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_rag_state_mutation",
+      "question": "RAG 도우미에게 질문하면 기기 볼륨도 바뀌나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "변경",
+          "바뀌"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 3.576287100000627,
+      "call_success": true,
+      "answer": "RAG 도우미의 답변은 기기 볼륨 조절에 영향을 주지 않습니다. 도우미는 텍스트 기반 답변을 제공하며, 볼륨 조절은 답변 내용이나 질에 영향을 미치지 않습니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_out_of_scope_geography",
+      "question": "프랑스의 수도와 현재 인구를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 1.667786400001205,
+      "call_success": true,
+      "answer": "프랑스의 수도는 파리이며, 현재 인구는 약 2,100만 명입니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_out_of_scope_recipe",
+      "question": "김치찌개 4인분 레시피를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 566.3637627999997,
+      "call_success": true,
+      "answer": "**김치찌개 4인분 레시피**  \n\n**재료**  \n- 김치 2~3개  \n- 라면 2~3컵 또는 밀가루 1컵 + 물 2컵  \n- 고추장 1~2자락  \n- 고추 1자락  \n- 간장 1~2자락  \n- 마늘 1자락  \n- 청주 1자락  \n- 쪽파 1~2개 (선택)  \n- 고추장 1~2자락 (선택)  \n\n**준비 과정**  \n1. **김치 처리**: 김치를 냉장고에서 10~15분 둔 후, 물 1컵과 함께 냄비에 냄비에 10분 놓고 끓이기.  \n2. **라면 준비**: 라면을 물에 빠르게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠지게 빠",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_pitch_range",
+      "question": "음정은 최소와 최대로 어디까지 조절할 수 있나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "최소 -6",
+          "-6부터",
+          "-6에서"
+        ],
+        [
+          "최대 6",
+          "6까지"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 1.394872299999406,
+      "call_success": true,
+      "answer": "음정은 최소 -6부터 최대 6까지 조절할 수 있습니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "sound_and_display_controls.md",
+          "excerpt": "## 자주 묻는 질문  \n### 음정을 최대로 얼마나 올릴 수 있나요?  \n최대값은 6이고 최소값은 -6이다.",
+          "score": 0.5019834041595459
+        },
+        {
+          "source": "sound_and_display_controls.md",
+          "excerpt": "## 음정과 키 조절  \n음정 또는 키 값은 -6부터 6까지다. `▲ 음정` 버튼은 현재 값에서 1을 올리고 `▼ 음정` 버튼은 1을 내린다. 자연어로는 `키 올려줘`, `키 한 칸 내려줘`, `피치 2로 맞춰줘`처럼 요청할 수 있다.  \n허용 범위를 넘는 값을 직접 요청하면 기기 상태를 변경하지 않는다. 예를 들어 `키를 10으로 설정해줘`는 지원 범위 밖이다. 현재 값이 6인 상태에서 더 올리는 상대 명령은 최대값 6을 넘지 않도록 처리해야 한다.",
+          "score": 0.5668089389801025
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_reverb_types",
+      "question": "지원하는 공간 음향 유형을 모두 알려줘.",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "Room"
+        ],
+        [
+          "Hall"
+        ],
+        [
+          "Stage"
+        ],
+        [
+          "None"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 2.253020200001629,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": false,
+      "source_correct": false,
+      "refusal_detected": true,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_priority_queue",
+      "question": "우선예약한 곡은 예약 목록의 어디에 들어가나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "앞",
+          "맨 앞"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 2.2091836999970837,
+      "call_success": true,
+      "answer": "우선예약한 곡은 예약 목록의 맨 앞에 추가된다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "playback_and_reservation.md",
+          "excerpt": "## 우선예약  \n곡 번호를 입력하고 `우선예약` 버튼을 누르면 해당 곡이 예약 목록의 맨 앞에 추가된다. 자연어로는 `1234번 우선예약해줘` 또는 `1234번 새치기 예약`처럼 요청할 수 있다. 다음에 예약곡 시작을 실행하면 목록 맨 앞의 곡부터 재생된다.",
+          "score": 0.51462721824646
+        },
+        {
+          "source": "playback_and_reservation.md",
+          "excerpt": "## 일반 예약  \n곡 번호를 입력하고 `예약` 버튼을 누르면 해당 번호가 예약 목록의 마지막에 추가된다. 자연어로는 `1234번 예약해줘` 또는 `예약 1234`라고 요청할 수 있다. 화면 중앙의 `[예약]` 항목에서 현재 예약 순서를 확인한다.  \n같은 번호를 다시 예약하는 동작은 현재 별도의 중복 차단 규칙이 없다. 의도하지 않은 중복 예약은 예약 취소 기능으로 제거한다.",
+          "score": 0.6011452078819275
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_stop_keeps_queue",
+      "question": "빨간 취소 버튼을 누르면 예약 목록 전체가 지워지나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "정지"
+        ],
+        [
+          "예약"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 1.88859070000035,
+      "call_success": true,
+      "answer": "빨간 취소 버튼을 누르면 예약 목록 전체가 지워지지 않습니다. 해당 버튼은 현재 재생을 정지하는 명령이며, 특정 예약을 지우려면 곡 번호를 입력하고 `예약취소`를 사용해야 합니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "playback_and_reservation.md",
+          "excerpt": "### 취소 버튼을 누르면 예약이 모두 사라지나요?  \n아니다. 빨간색 취소 버튼은 현재 재생을 정지하는 명령이다. 특정 예약을 지우려면 곡 번호를 입력하고 `예약취소`를 사용한다.",
+          "score": 0.47177672386169434
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_api_disconnected",
+      "question": "API가 DISCONNECTED일 때 먼저 확인할 주소는 무엇인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "127.0.0.1:8000/docs",
+          "localhost:8000/docs"
+        ]
+      ],
+      "gold_sources": [
+        "troubleshooting.md"
+      ],
+      "latency_seconds": 2.4040653000010934,
+      "call_success": true,
+      "answer": "API가 DISCONNECTED일 때 먼저 확인할 주소는 **http://127.0.0.1:8000/docs**입니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "troubleshooting.md",
+          "excerpt": "## API가 DISCONNECTED로 표시될 때  \n상단 상태가 `API: DISCONNECTED`라면 프론트엔드가 `http://127.0.0.1:8000/docs`에 접근하지 못한 상태다.  \n1. 백엔드를 `python -m uvicorn backend.main:app --reload`로 실행했는지 확인한다.\n2. 브라우저에서 `http://127.0.0.1:8000/docs`가 열리는지 확인한다.\n3. 프론트엔드의 `API_BASE`가 실제 백엔드 주소와 같은지 확인한다.\n4. 다른 프로그램이 8000 포트를 사용 중인지 확인한다.\n5. 백엔드 로그에 Python 패키지 또는 모델 초기화 오류가 있는지 확인한다.  \nPing 버튼은 API 연결 여부를 다시 확인한다. 연결이 복구되면 `API: CONNECTED`로 바뀐다.",
+          "score": 0.6243075132369995
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_audio_limit",
+      "question": "한 번에 올릴 수 있는 음성 녹음 파일의 최대 크기는 얼마인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "15MB",
+          "15 MB"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 0.04326519999813172,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": false,
+      "source_correct": false,
+      "refusal_detected": true,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_rag_state_mutation",
+      "question": "RAG 도우미에게 질문하면 기기 볼륨도 바뀌나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "변경",
+          "바뀌"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 2.384113600001001,
+      "call_success": true,
+      "answer": "RAG 도우미에게 질문하면 기기 볼륨이 바뀌지 않습니다. 제공된 문서에 따르면 RAG는 기기 상태를 변경하지 않는 답변만 제공합니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "voice_and_agent_guide.md",
+          "excerpt": "### RAG에 질문하면 볼륨이 바뀌나요?  \n아니다. RAG는 문서 검색과 답변 전용이며 현재 기기 상태를 입력받거나 수정하지 않는다.",
+          "score": 0.48860248923301697
+        },
+        {
+          "source": "voice_and_agent_guide.md",
+          "excerpt": "## RAG 사용 도우미와 기기 제어의 차이  \n기기 제어 입력창은 상태를 변경하는 명령에 사용한다. 오른쪽 RAG 사용 도우미는 프로젝트 문서에서 사용법과 오류 해결 방법을 검색해 답하는 정보 안내 기능이다. RAG 질문은 기기 상태를 변경하지 않는다.  \n예를 들어 `키 올려줘`는 기기 제어 입력창에 넣고 `키는 어디까지 올릴 수 있어?`는 RAG 사용 도우미에 질문한다.",
+          "score": 0.6054388284683228
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_out_of_scope_geography",
+      "question": "프랑스의 수도와 현재 인구를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 2.1615631000022404,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": true,
+      "refusal_correct": true
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:1.7b",
+      "case_id": "qa_out_of_scope_recipe",
+      "question": "김치찌개 4인분 레시피를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 0.038403200000175275,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": true,
+      "refusal_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_pitch_increment",
+      "command": "키 한 칸 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "music.pitch": 1
+      },
+      "latency_seconds": 11.50233709999884,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": false,
+      "validation_error": "ValidationError: 2 validation errors for KaraokeMachine\nbrand\n  Field required [type=missing, input_value={'music': {'pitch': 1, 't... 'subtitle_lang': 'KOR'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\nmodel_name\n  Field required [type=missing, input_value={'music': {'pitch': 1, 't... 'subtitle_lang': 'KOR'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+      "output_state": null,
+      "raw_output": "{\n  \"music\": {\n    \"pitch\": 1,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": false,
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": false
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_pitch_at_upper_bound",
+      "command": "키 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 18.835466100001213,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 6,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_invalid_pitch",
+      "command": "피치를 10으로 설정해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 11.468730100001267,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_reserve_append",
+      "command": "333번 예약해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          111,
+          222,
+          333
+        ]
+      },
+      "latency_seconds": 22.55865669999912,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222,
+            333
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222,\n      333\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_priority_reserve",
+      "command": "333번 새치기 예약",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          333,
+          111,
+          222
+        ]
+      },
+      "latency_seconds": 35.46595690000322,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            333,
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      333,\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_cancel_reservation",
+      "command": "예약 취소 111",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ]
+      },
+      "latency_seconds": 18.846243500000128,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_start_reserved",
+      "command": "예약된 곡 시작",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ],
+        "queue.played_song": 111,
+        "is_playing": true
+      },
+      "latency_seconds": 9.043260300000838,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": false,
+      "validation_error": "ValidationError: 2 validation errors for KaraokeMachine\nbrand\n  Field required [type=missing, input_value={'queue': {'reserved_song...11}, 'is_playing': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\nmodel_name\n  Field required [type=missing, input_value={'queue': {'reserved_song...11}, 'is_playing': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+      "output_state": null,
+      "raw_output": "{\n  \"queue\": {\n    \"reserved_songs\": [\n      222\n    ],\n    \"played_song\": 111\n  },\n  \"is_playing\": true\n}",
+      "expected_fields_correct": false,
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": false
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_disable_vocal_cancel",
+      "command": "보컬 살려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": true
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "sound.voice_cancel": false
+      },
+      "latency_seconds": 8.044773399997212,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": false,
+      "validation_error": "ValidationError: 1 validation error for PlayQueue\nplayed_song\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing",
+      "output_state": null,
+      "raw_output": "{\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  }\n}",
+      "expected_fields_correct": false,
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": false
+    },
+    {
+      "category": "command",
+      "pipeline": "raw",
+      "model": "qwen3:8b",
+      "case_id": "cmd_unsupported_lights",
+      "command": "무대 조명을 파란색으로 켜줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 12.78098559999853,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"reserved_songs\": [\n      111,\n      222\n    ],\n    \"played_song\": null\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_pitch_increment",
+      "command": "키 한 칸 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "music.pitch": 1
+      },
+      "latency_seconds": 13.135650000000169,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 1,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 1,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "music.pitch"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_pitch_at_upper_bound",
+      "command": "키 올려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 16.798568300000625,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 6,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 6,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_invalid_pitch",
+      "command": "피치를 10으로 설정해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 12.34322560000146,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_reserve_append",
+      "command": "333번 예약해줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          111,
+          222,
+          333
+        ]
+      },
+      "latency_seconds": 19.123542800003634,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222,
+            333
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222,\n      333\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_priority_reserve",
+      "command": "333번 새치기 예약",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          333,
+          111,
+          222
+        ]
+      },
+      "latency_seconds": 24.014904800002114,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            333,
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      333,\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_cancel_reservation",
+      "command": "예약 취소 111",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ]
+      },
+      "latency_seconds": 19.413506599998072,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_start_reserved",
+      "command": "예약된 곡 시작",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "queue.reserved_songs": [
+          222
+        ],
+        "queue.played_song": 111,
+        "is_playing": true
+      },
+      "latency_seconds": 15.177270899999712,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            222
+          ],
+          "played_song": 111
+        },
+        "is_playing": true,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": 111,\n    \"reserved_songs\": [\n      222\n    ]\n  },\n  \"is_playing\": true,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "is_playing",
+        "queue.played_song",
+        "queue.reserved_songs"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_disable_vocal_cancel",
+      "command": "보컬 살려줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": true
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {
+        "sound.voice_cancel": false
+      },
+      "latency_seconds": 13.198402799996984,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [
+        "sound.voice_cancel"
+      ],
+      "command_correct": true
+    },
+    {
+      "category": "command",
+      "pipeline": "structured",
+      "model": "qwen3:8b",
+      "case_id": "cmd_unsupported_lights",
+      "command": "무대 조명을 파란색으로 켜줘",
+      "origin": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "expected_fields": {},
+      "latency_seconds": 12.643406099999993,
+      "call_success": true,
+      "json_valid": true,
+      "schema_valid": true,
+      "validation_error": null,
+      "output_state": {
+        "brand": "TJ",
+        "model_name": "B80",
+        "music": {
+          "pitch": 0,
+          "tempo": 0,
+          "melody_volume": 50
+        },
+        "sound": {
+          "echo_level": 50,
+          "reverb_type": "Hall",
+          "mic_volume": 70,
+          "inst_volume": 60,
+          "voice_cancel": false
+        },
+        "queue": {
+          "reserved_songs": [
+            111,
+            222
+          ],
+          "played_song": null
+        },
+        "is_playing": false,
+        "remaining_time": 0,
+        "remaining_coins": 0,
+        "subtitle_lang": "KOR"
+      },
+      "raw_output": "{\n  \"brand\": \"TJ\",\n  \"model_name\": \"B80\",\n  \"music\": {\n    \"pitch\": 0,\n    \"tempo\": 0,\n    \"melody_volume\": 50\n  },\n  \"sound\": {\n    \"echo_level\": 50,\n    \"reverb_type\": \"Hall\",\n    \"mic_volume\": 70,\n    \"inst_volume\": 60,\n    \"voice_cancel\": false\n  },\n  \"queue\": {\n    \"played_song\": null,\n    \"reserved_songs\": [\n      111,\n      222\n    ]\n  },\n  \"is_playing\": false,\n  \"remaining_time\": 0,\n  \"remaining_coins\": 0,\n  \"subtitle_lang\": \"KOR\"\n}",
+      "expected_fields_correct": true,
+      "missing_expected_mutations": [],
+      "unexpected_mutations": [],
+      "changed_paths": [],
+      "command_correct": true
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_pitch_range",
+      "question": "음정은 최소와 최대로 어디까지 조절할 수 있나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "최소 -6",
+          "-6부터",
+          "-6에서"
+        ],
+        [
+          "최대 6",
+          "6까지"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 7.134938300001522,
+      "call_success": true,
+      "answer": "음정 조절 범위는 악기와 악보에 따라 다릅니다. 일반적으로 피아노는 A4(440Hz)에서 A4(440Hz)까지, 기타는 E2(82.41Hz)에서 E6(1567.98Hz)까지 조절할 수 있습니다. 구체적인 범위는 악기 종류와 설정에 따라 달라질 수 있습니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_reverb_types",
+      "question": "지원하는 공간 음향 유형을 모두 알려줘.",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "Room"
+        ],
+        [
+          "Hall"
+        ],
+        [
+          "Stage"
+        ],
+        [
+          "None"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 7.51859080000213,
+      "call_success": true,
+      "answer": "- Dolby Atmos  \n- DTS:X  \n- Sony Object Audio  \n- Apple Spatial Audio (Head Tracking)  \n- Windows Spatial Audio  \n- EAC3 (Open Standard)  \n- Dolby Atmos for Music",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_priority_queue",
+      "question": "우선예약한 곡은 예약 목록의 어디에 들어가나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "앞",
+          "맨 앞"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 4.718839900000603,
+      "call_success": true,
+      "answer": "예약한 곡은 예약 목록에 추가됩니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_stop_keeps_queue",
+      "question": "빨간 취소 버튼을 누르면 예약 목록 전체가 지워지나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "정지"
+        ],
+        [
+          "예약"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 9.266219100001763,
+      "call_success": true,
+      "answer": "네, 빨간 취소 버튼을 누르면 예약 목록 전체가 지워집니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_api_disconnected",
+      "question": "API가 DISCONNECTED일 때 먼저 확인할 주소는 무엇인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "127.0.0.1:8000/docs",
+          "localhost:8000/docs"
+        ]
+      ],
+      "gold_sources": [
+        "troubleshooting.md"
+      ],
+      "latency_seconds": 9.574177000002237,
+      "call_success": true,
+      "answer": "API가 DISCONNECTED일 때 먼저 확인할 주소는 서버의 IP 주소 또는 도메인 주소입니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_audio_limit",
+      "question": "한 번에 올릴 수 있는 음성 녹음 파일의 최대 크기는 얼마인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "15MB",
+          "15 MB"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 8.871206700001494,
+      "call_success": true,
+      "answer": "일반적으로 음성 녹음 파일의 최대 크기는 플랫폼에 따라 다릅니다. 대부분의 서비스는 100MB 이하로 제한되며, 큰 파일은 분할하거나 압축해야 합니다. 구체적인 제한은 해당 플랫폼의 문서를 확인하세요.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_rag_state_mutation",
+      "question": "RAG 도우미에게 질문하면 기기 볼륨도 바뀌나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "변경",
+          "바뀌"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 10.912961000001815,
+      "call_success": true,
+      "answer": "아니요, RAG 도우미는 기기 볼륨을 조절할 수 없습니다.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_out_of_scope_geography",
+      "question": "프랑스의 수도와 현재 인구를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 8.968155800001114,
+      "call_success": true,
+      "answer": "프랑스의 수도는 **파리**입니다.  \n현재 인구는 약 **210만 명**입니다. (2023년 기준)",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "direct",
+      "model": "qwen3:8b",
+      "case_id": "qa_out_of_scope_recipe",
+      "question": "김치찌개 4인분 레시피를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 28.566731599999912,
+      "call_success": true,
+      "answer": "김치찌개 4인분 레시피:  \n- **김치**: 2컵 (매운맛 기준)  \n- **돼지고기**: 250g (썰어)  \n- **고추장**: 2큰술  \n- **두부**: 1/2개 (썰어)  \n- **대파**: 2대 (썰어)  \n- **고추가루**: 1작은술  \n- **간장**: 1작은술  \n- **물**: 1.5컵  \n\n**만드는 법**:  \n1. 김치에 고추가루, 간장 섞어 5분 재워두기.  \n2. 팬에 기름 넣고 대파, 마늘, 생강 볶기.  \n3. 돼지고기 넣고 볶다가 김치 넣어 10분 익히기.  \n4. 물 넣고 끓어오르면 두부 넣고 15분 더 끓이기.  \n5. 마지막에 고추장 넣고 간 맞춰서 완성.  \n\n*맛을 조절하려면 고추장 양 조절.",
+      "grounded": null,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_pitch_range",
+      "question": "음정은 최소와 최대로 어디까지 조절할 수 있나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "최소 -6",
+          "-6부터",
+          "-6에서"
+        ],
+        [
+          "최대 6",
+          "6까지"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 4.8336324999982025,
+      "call_success": true,
+      "answer": "음정은 -6에서 6까지 조절할 수 있습니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "sound_and_display_controls.md",
+          "excerpt": "## 자주 묻는 질문  \n### 음정을 최대로 얼마나 올릴 수 있나요?  \n최대값은 6이고 최소값은 -6이다.",
+          "score": 0.5019834041595459
+        },
+        {
+          "source": "sound_and_display_controls.md",
+          "excerpt": "## 음정과 키 조절  \n음정 또는 키 값은 -6부터 6까지다. `▲ 음정` 버튼은 현재 값에서 1을 올리고 `▼ 음정` 버튼은 1을 내린다. 자연어로는 `키 올려줘`, `키 한 칸 내려줘`, `피치 2로 맞춰줘`처럼 요청할 수 있다.  \n허용 범위를 넘는 값을 직접 요청하면 기기 상태를 변경하지 않는다. 예를 들어 `키를 10으로 설정해줘`는 지원 범위 밖이다. 현재 값이 6인 상태에서 더 올리는 상대 명령은 최대값 6을 넘지 않도록 처리해야 한다.",
+          "score": 0.5668089389801025
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_reverb_types",
+      "question": "지원하는 공간 음향 유형을 모두 알려줘.",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "Room"
+        ],
+        [
+          "Hall"
+        ],
+        [
+          "Stage"
+        ],
+        [
+          "None"
+        ]
+      ],
+      "gold_sources": [
+        "sound_and_display_controls.md"
+      ],
+      "latency_seconds": 0.0867644999998447,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": false,
+      "source_correct": false,
+      "refusal_detected": true,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_priority_queue",
+      "question": "우선예약한 곡은 예약 목록의 어디에 들어가나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "앞",
+          "맨 앞"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 9.06040639999992,
+      "call_success": true,
+      "answer": "우선예약한 곡은 예약 목록의 맨 앞에 추가됩니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "playback_and_reservation.md",
+          "excerpt": "## 우선예약  \n곡 번호를 입력하고 `우선예약` 버튼을 누르면 해당 곡이 예약 목록의 맨 앞에 추가된다. 자연어로는 `1234번 우선예약해줘` 또는 `1234번 새치기 예약`처럼 요청할 수 있다. 다음에 예약곡 시작을 실행하면 목록 맨 앞의 곡부터 재생된다.",
+          "score": 0.51462721824646
+        },
+        {
+          "source": "playback_and_reservation.md",
+          "excerpt": "## 일반 예약  \n곡 번호를 입력하고 `예약` 버튼을 누르면 해당 번호가 예약 목록의 마지막에 추가된다. 자연어로는 `1234번 예약해줘` 또는 `예약 1234`라고 요청할 수 있다. 화면 중앙의 `[예약]` 항목에서 현재 예약 순서를 확인한다.  \n같은 번호를 다시 예약하는 동작은 현재 별도의 중복 차단 규칙이 없다. 의도하지 않은 중복 예약은 예약 취소 기능으로 제거한다.",
+          "score": 0.6011452078819275
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_stop_keeps_queue",
+      "question": "빨간 취소 버튼을 누르면 예약 목록 전체가 지워지나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "정지"
+        ],
+        [
+          "예약"
+        ]
+      ],
+      "gold_sources": [
+        "playback_and_reservation.md"
+      ],
+      "latency_seconds": 6.661969900000258,
+      "call_success": true,
+      "answer": "아니요. 빨간 취소 버튼은 현재 재생을 정지하는 것뿐입니다. 예약 목록 전체를 지우려면 특정 곡 번호를 입력하고 `예약취소`를 사용해야 합니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "playback_and_reservation.md",
+          "excerpt": "### 취소 버튼을 누르면 예약이 모두 사라지나요?  \n아니다. 빨간색 취소 버튼은 현재 재생을 정지하는 명령이다. 특정 예약을 지우려면 곡 번호를 입력하고 `예약취소`를 사용한다.",
+          "score": 0.47177672386169434
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_api_disconnected",
+      "question": "API가 DISCONNECTED일 때 먼저 확인할 주소는 무엇인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "127.0.0.1:8000/docs",
+          "localhost:8000/docs"
+        ]
+      ],
+      "gold_sources": [
+        "troubleshooting.md"
+      ],
+      "latency_seconds": 4.227288500002032,
+      "call_success": true,
+      "answer": "http://127.0.0.1:8000/docs",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "troubleshooting.md",
+          "excerpt": "## API가 DISCONNECTED로 표시될 때  \n상단 상태가 `API: DISCONNECTED`라면 프론트엔드가 `http://127.0.0.1:8000/docs`에 접근하지 못한 상태다.  \n1. 백엔드를 `python -m uvicorn backend.main:app --reload`로 실행했는지 확인한다.\n2. 브라우저에서 `http://127.0.0.1:8000/docs`가 열리는지 확인한다.\n3. 프론트엔드의 `API_BASE`가 실제 백엔드 주소와 같은지 확인한다.\n4. 다른 프로그램이 8000 포트를 사용 중인지 확인한다.\n5. 백엔드 로그에 Python 패키지 또는 모델 초기화 오류가 있는지 확인한다.  \nPing 버튼은 API 연결 여부를 다시 확인한다. 연결이 복구되면 `API: CONNECTED`로 바뀐다.",
+          "score": 0.6243075132369995
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_audio_limit",
+      "question": "한 번에 올릴 수 있는 음성 녹음 파일의 최대 크기는 얼마인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "15MB",
+          "15 MB"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 0.08683200000086799,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": false,
+      "retrieval_success": false,
+      "source_correct": false,
+      "refusal_detected": true,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_rag_state_mutation",
+      "question": "RAG 도우미에게 질문하면 기기 볼륨도 바뀌나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [
+        [
+          "아니",
+          "않"
+        ],
+        [
+          "변경",
+          "바뀌"
+        ]
+      ],
+      "gold_sources": [
+        "voice_and_agent_guide.md"
+      ],
+      "latency_seconds": 5.418861099999049,
+      "call_success": true,
+      "answer": "아니요. RAG 도우미는 기기 상태를 변경하지 않습니다.",
+      "grounded": true,
+      "sources": [
+        {
+          "source": "voice_and_agent_guide.md",
+          "excerpt": "### RAG에 질문하면 볼륨이 바뀌나요?  \n아니다. RAG는 문서 검색과 답변 전용이며 현재 기기 상태를 입력받거나 수정하지 않는다.",
+          "score": 0.48860248923301697
+        },
+        {
+          "source": "voice_and_agent_guide.md",
+          "excerpt": "## RAG 사용 도우미와 기기 제어의 차이  \n기기 제어 입력창은 상태를 변경하는 명령에 사용한다. 오른쪽 RAG 사용 도우미는 프로젝트 문서에서 사용법과 오류 해결 방법을 검색해 답하는 정보 안내 기능이다. RAG 질문은 기기 상태를 변경하지 않는다.  \n예를 들어 `키 올려줘`는 기기 제어 입력창에 넣고 `키는 어디까지 올릴 수 있어?`는 RAG 사용 도우미에 질문한다.",
+          "score": 0.6054388284683228
+        }
+      ],
+      "answer_correct": true,
+      "retrieval_success": true,
+      "source_correct": true,
+      "refusal_detected": false,
+      "refusal_correct": null
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_out_of_scope_geography",
+      "question": "프랑스의 수도와 현재 인구를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 0.06567879999784054,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": true,
+      "refusal_correct": true
+    },
+    {
+      "category": "qa",
+      "pipeline": "rag",
+      "model": "qwen3:8b",
+      "case_id": "qa_out_of_scope_recipe",
+      "question": "김치찌개 4인분 레시피를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": [],
+      "latency_seconds": 0.04437049999978626,
+      "call_success": true,
+      "answer": "제공된 문서에서 확인할 수 없습니다.",
+      "grounded": false,
+      "sources": [],
+      "answer_correct": null,
+      "retrieval_success": null,
+      "source_correct": null,
+      "refusal_detected": true,
+      "refusal_correct": true
+    }
+  ]
+}

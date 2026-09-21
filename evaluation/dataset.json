@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "description": "Small deterministic benchmark for the current karaoke command agent and documentation RAG. Gold labels come from backend/main.py and backend/knowledge/*.md.",
+  "default_state": {
+    "brand": "TJ",
+    "model_name": "B80",
+    "music": {"pitch": 0, "tempo": 0, "melody_volume": 50},
+    "sound": {
+      "echo_level": 50,
+      "reverb_type": "Hall",
+      "mic_volume": 70,
+      "inst_volume": 60,
+      "voice_cancel": false
+    },
+    "queue": {"reserved_songs": [111, 222], "played_song": null},
+    "is_playing": false,
+    "remaining_time": 0,
+    "remaining_coins": 0,
+    "subtitle_lang": "KOR"
+  },
+  "command_cases": [
+    {
+      "id": "cmd_pitch_increment",
+      "command": "키 한 칸 올려줘",
+      "expected_fields": {"music.pitch": 1}
+    },
+    {
+      "id": "cmd_pitch_at_upper_bound",
+      "command": "키 올려줘",
+      "origin_overrides": {"music.pitch": 6},
+      "expected_fields": {}
+    },
+    {
+      "id": "cmd_invalid_pitch",
+      "command": "피치를 10으로 설정해줘",
+      "expected_fields": {}
+    },
+    {
+      "id": "cmd_reserve_append",
+      "command": "333번 예약해줘",
+      "expected_fields": {"queue.reserved_songs": [111, 222, 333]}
+    },
+    {
+      "id": "cmd_priority_reserve",
+      "command": "333번 새치기 예약",
+      "expected_fields": {"queue.reserved_songs": [333, 111, 222]}
+    },
+    {
+      "id": "cmd_cancel_reservation",
+      "command": "예약 취소 111",
+      "expected_fields": {"queue.reserved_songs": [222]}
+    },
+    {
+      "id": "cmd_start_reserved",
+      "command": "예약된 곡 시작",
+      "expected_fields": {
+        "queue.reserved_songs": [222],
+        "queue.played_song": 111,
+        "is_playing": true
+      }
+    },
+    {
+      "id": "cmd_disable_vocal_cancel",
+      "command": "보컬 살려줘",
+      "origin_overrides": {"sound.voice_cancel": true},
+      "expected_fields": {"sound.voice_cancel": false}
+    },
+    {
+      "id": "cmd_unsupported_lights",
+      "command": "무대 조명을 파란색으로 켜줘",
+      "expected_fields": {}
+    }
+  ],
+  "qa_cases": [
+    {
+      "id": "qa_pitch_range",
+      "question": "음정은 최소와 최대로 어디까지 조절할 수 있나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["최소 -6", "-6부터", "-6에서"], ["최대 6", "6까지"]],
+      "gold_sources": ["sound_and_display_controls.md"]
+    },
+    {
+      "id": "qa_reverb_types",
+      "question": "지원하는 공간 음향 유형을 모두 알려줘.",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["Room"], ["Hall"], ["Stage"], ["None"]],
+      "gold_sources": ["sound_and_display_controls.md"]
+    },
+    {
+      "id": "qa_priority_queue",
+      "question": "우선예약한 곡은 예약 목록의 어디에 들어가나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["앞", "맨 앞"]],
+      "gold_sources": ["playback_and_reservation.md"]
+    },
+    {
+      "id": "qa_stop_keeps_queue",
+      "question": "빨간 취소 버튼을 누르면 예약 목록 전체가 지워지나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["아니", "않"], ["정지"], ["예약"]],
+      "gold_sources": ["playback_and_reservation.md"]
+    },
+    {
+      "id": "qa_api_disconnected",
+      "question": "API가 DISCONNECTED일 때 먼저 확인할 주소는 무엇인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["127.0.0.1:8000/docs", "localhost:8000/docs"]],
+      "gold_sources": ["troubleshooting.md"]
+    },
+    {
+      "id": "qa_audio_limit",
+      "question": "한 번에 올릴 수 있는 음성 녹음 파일의 최대 크기는 얼마인가요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["15MB", "15 MB"]],
+      "gold_sources": ["voice_and_agent_guide.md"]
+    },
+    {
+      "id": "qa_rag_state_mutation",
+      "question": "RAG 도우미에게 질문하면 기기 볼륨도 바뀌나요?",
+      "expected_refusal": false,
+      "gold_keyword_groups": [["아니", "않"], ["변경", "바뀌"]],
+      "gold_sources": ["voice_and_agent_guide.md"]
+    },
+    {
+      "id": "qa_out_of_scope_geography",
+      "question": "프랑스의 수도와 현재 인구를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": []
+    },
+    {
+      "id": "qa_out_of_scope_recipe",
+      "question": "김치찌개 4인분 레시피를 알려줘.",
+      "expected_refusal": true,
+      "gold_keyword_groups": [],
+      "gold_sources": []
+    }
+  ]
+}
