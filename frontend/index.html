@@ -21,6 +21,7 @@
       </div>
     </header>
 
+    <div class="app-workspace">
     <div class="machine-wrapper">
       <div class="machine-body">
         <div class="machine-main">
@@ -313,6 +314,45 @@
         </div>
       </div>
     </div>
+
+    <aside class="rag-panel" aria-labelledby="ragTitle">
+      <div class="rag-panel-head">
+        <span class="rag-label">DOCUMENT RAG</span>
+        <h2 id="ragTitle">사용 도우미</h2>
+        <p>프로젝트 안내 문서에서 사용법과 문제 해결 방법을 찾아 답해요.</p>
+      </div>
+      <form id="ragForm" class="rag-form">
+        <label for="ragQuestion">궁금한 내용을 입력하세요</label>
+        <textarea id="ragQuestion" maxlength="500" placeholder="예: 예약한 곡을 취소하려면 어떻게 해?"></textarea>
+        <div class="rag-actions">
+          <button id="btnRagAsk" class="btn rag-primary" type="submit">문서 검색</button>
+          <button id="btnRagDocuments" class="btn ghost" type="button">검색 자료 보기</button>
+        </div>
+      </form>
+      <div id="ragStatus" class="rag-status" role="status">질문을 입력하면 관련 문서를 검색합니다.</div>
+      <section id="ragAnswer" class="rag-answer" aria-live="polite"></section>
+      <section class="rag-sources" aria-labelledby="ragSourcesTitle">
+        <h3 id="ragSourcesTitle">참조 문서</h3>
+        <div id="ragSourceList"><p class="rag-empty">아직 참조한 문서가 없습니다.</p></div>
+      </section>
+      <p class="rag-disclaimer">프로젝트 자체 작성 자료이며 제조사 공식 설명서가 아닙니다.</p>
+    </aside>
+    </div>
+
+    <dialog id="ragDocumentDialog" class="rag-document-dialog" aria-labelledby="ragDocumentTitle">
+      <div class="rag-dialog-head">
+        <div><span class="rag-label">RAG KNOWLEDGE</span><h2 id="ragDocumentTitle">검색 자료</h2></div>
+        <button id="btnCloseRagDocuments" class="btn ghost" type="button" aria-label="검색 자료 닫기">닫기</button>
+      </div>
+      <p class="rag-disclaimer">RAG가 실제로 검색하는 프로젝트 문서 원문입니다.</p>
+      <div class="rag-document-layout">
+        <nav id="ragDocumentList" class="rag-document-list" aria-label="검색 자료 목록"></nav>
+        <article class="rag-document-content">
+          <h3 id="ragDocumentName">문서를 선택하세요.</h3>
+          <pre id="ragDocumentBody"></pre>
+        </article>
+      </div>
+    </dialog>
 
     <main class="dev-panel">
       <div class="dev-grid">

@@ -690,6 +690,108 @@ function initRotaryDials() {
   });
 }
 
+// ====== RAG ASSISTANT (isolated from device state) ======
+const ragForm = $("ragForm");
+const ragQuestion = $("ragQuestion");
+const btnRagAsk = $("btnRagAsk");
+const btnRagDocuments = $("btnRagDocuments");
+const ragStatus = $("ragStatus");
+const ragAnswer = $("ragAnswer");
+const ragSourceList = $("ragSourceList");
+const ragDocumentDialog = $("ragDocumentDialog");
+const ragDocumentList = $("ragDocumentList");
+const ragDocumentName = $("ragDocumentName");
+const ragDocumentBody = $("ragDocumentBody");
+let ragDocuments = [];
+
+async function fetchJson(path, options) {
+  const response = await fetch(API_BASE + path, options);
+  if (!response.ok) {
+    let message = `HTTP ${response.status}`;
+    try { const data = await response.json(); message = data.detail || message; } catch {}
+    throw new Error(message);
+  }
+  return response.json();
+}
+
+async function loadRagDocuments() {
+  ragDocuments = await fetchJson("/api/v1/rag/documents");
+  ragDocumentList.replaceChildren();
+  if (!ragDocuments.length) {
+    const empty = document.createElement("p"); empty.className = "rag-empty";
+    empty.textContent = "등록된 검색 자료가 없습니다."; ragDocumentList.append(empty); return;
+  }
+  ragDocuments.forEach((doc) => {
+    const button = document.createElement("button"); button.type = "button";
+    button.className = "rag-doc-button"; button.dataset.documentId = doc.id;
+    const title = document.createElement("strong"); title.textContent = doc.title;
+    const filename = document.createElement("small"); filename.textContent = doc.filename;
+    button.append(title, filename);
+    button.addEventListener("click", () => openRagDocument(doc.id));
+    ragDocumentList.append(button);
+  });
+}
+
+async function openRagDocument(documentId) {
+  const doc = await fetchJson(`/api/v1/rag/documents/${encodeURIComponent(documentId)}`);
+  ragDocumentName.textContent = `${doc.title} · ${doc.filename}`;
+  ragDocumentBody.textContent = doc.content;
+}
+
+async function showRagDocuments(preferredFilename = null) {
+  try {
+    if (!ragDocuments.length) await loadRagDocuments();
+    ragDocumentDialog.showModal();
+    const selected = preferredFilename
+      ? ragDocuments.find((doc) => doc.filename === preferredFilename)
+      : ragDocuments[0];
+    if (selected) await openRagDocument(selected.id);
+  } catch (error) {
+    safeText(ragStatus, `검색 자료를 불러오지 못했습니다: ${error.message}`);
+  }
+}
+
+function renderRagSources(sources) {
+  ragSourceList.replaceChildren();
+  if (!sources?.length) {
+    const empty = document.createElement("p"); empty.className = "rag-empty";
+    empty.textContent = "표시할 검색 근거가 없습니다."; ragSourceList.append(empty); return;
+  }
+  sources.forEach((source) => {
+    const card = document.createElement("div"); card.className = "rag-source-card";
+    const name = document.createElement("strong"); name.textContent = source.source;
+    const excerpt = document.createElement("p"); excerpt.textContent = source.excerpt;
+    const open = document.createElement("button"); open.type = "button"; open.className = "btn ghost";
+    open.textContent = "원문 보기"; open.addEventListener("click", () => showRagDocuments(source.source));
+    card.append(name, excerpt, open); ragSourceList.append(card);
+  });
+}
+
+async function askRag(question) {
+  const trimmed = question.trim();
+  if (!trimmed) { safeText(ragStatus, "질문을 입력하세요."); return; }
+  btnRagAsk.disabled = true; safeText(ragStatus, "관련 문서를 검색하고 있어요...");
+  ragAnswer.textContent = ""; renderRagSources([]);
+  try {
+    const data = await fetchJson("/api/v1/rag/query", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: trimmed, top_k: 4 }),
+    });
+    ragAnswer.textContent = data.answer;
+    safeText(ragStatus, data.grounded ? "검색 문서를 근거로 답했어요." : "관련 근거를 찾지 못했어요.");
+    renderRagSources(data.sources);
+  } catch (error) {
+    safeText(ragStatus, `RAG를 사용할 수 없습니다: ${error.message}`);
+  } finally { btnRagAsk.disabled = false; }
+}
+
+ragForm?.addEventListener("submit", (event) => { event.preventDefault(); askRag(ragQuestion.value); });
+btnRagDocuments?.addEventListener("click", () => showRagDocuments());
+$("btnCloseRagDocuments")?.addEventListener("click", () => ragDocumentDialog.close());
+ragDocumentDialog?.addEventListener("click", (event) => {
+  if (event.target === ragDocumentDialog) ragDocumentDialog.close();
+});
+
 // ====== INIT ======
 btnPing?.addEventListener("click", ping);
 btnReset?.addEventListener("click", resetOrigin);

@@ -182,7 +182,7 @@ ollama pull nomic-embed-text
 ollama list
 ```
 
-Expected: `nomic-embed-text`와 기존 `qwen3:1.7b`가 목록에 표시됨.
+Expected: `bge-m3`와 기존 `qwen3:1.7b`가 목록에 표시됨.
 
 **Step 6: Commit**
 
@@ -924,7 +924,7 @@ git add README.md TODO.md
 - RAG 패널 위치: 기존 기기 바깥 오른쪽
 - 질문 범위: 사용법과 데모 문제 해결
 - 벡터 저장소: Chroma
-- 임베딩: Ollama `nomic-embed-text`
+- 임베딩: Ollama `bge-m3`
 - 생성 모델: 기존 `qwen3:1.7b`
 - 검색 문서: 프로젝트 내부 Markdown
 - 답변 언어: 한국어

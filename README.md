@@ -10,6 +10,19 @@
 - 음정·템포·볼륨·에코·공간 음향·자막·예약곡 상태 제어
 - 모호하거나 지원하지 않는 명령에 대한 기존 상태 유지
 - FastAPI 백엔드와 HTML·CSS·JavaScript 웹 제어 화면 연동
+- 기기 오른쪽 RAG 사용 도우미에서 프로젝트 문서 검색·근거 기반 답변
+- 검색에 사용된 문서 목록과 전체 원문 열람
+
+## RAG 사용 도우미
+
+기기 제어 Agent와 RAG는 서로 분리되어 있습니다. 기존 명령창은 기기 상태를 변경하고, 오른쪽 RAG 패널은 `backend/knowledge`의 프로젝트 사용 안내만 검색합니다. RAG 질문은 예약·음량 등 기기 상태를 변경하지 않습니다.
+
+```text
+질문 → bge-m3 임베딩 → Chroma 관련 문서 검색
+     → 검색 문맥 + Qwen3 1.7B → 답변·출처·발췌문
+```
+
+현재 검색 자료는 재생·예약, 음향·화면 제어, 음성 Agent, 문제 해결을 다룬 자체 작성 문서 4개입니다. 제조사 공식 설명서가 아닙니다. 패널의 **검색 자료 보기** 또는 답변 출처의 **원문 보기**로 RAG가 실제 검색하는 전체 내용을 확인할 수 있습니다. 문서 조회 API는 Ollama가 실행되지 않아도 동작합니다.
 
 ## 성능 및 명령 처리 개선
 
@@ -41,7 +54,8 @@ LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구
 ## 기술 스택
 
 - **Backend:** Python, FastAPI, Pydantic
-- **AI:** LangChain, ChatOllama, Ollama, Qwen3 1.7B
+- **AI:** LangChain, ChatOllama, Ollama, Qwen3 1.7B, bge-m3
+- **RAG:** Chroma, Markdown knowledge corpus
 - **Speech:** faster-whisper
 - **Frontend:** HTML, CSS, Vanilla JavaScript
 
@@ -50,6 +64,8 @@ LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구
 ```text
 .
 ├── backend/
+│   ├── knowledge/             # RAG가 검색하고 UI에서 공개하는 원문
+│   ├── rag/                   # 로더·검색·답변·문서 조회 API
 │   ├── __init__.py
 │   └── main.py                # FastAPI, STT, LLM 명령 처리와 출력 검증
 ├── frontend/
@@ -67,10 +83,11 @@ LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구
 
 ### 1. Ollama 및 모델 준비
 
-Ollama를 설치한 뒤 Qwen3 1.7B 모델을 내려받습니다.
+Ollama를 설치한 뒤 생성 모델과 한국어 검색용 임베딩 모델을 내려받습니다.
 
 ```bash
 ollama pull qwen3:1.7b
+ollama pull bge-m3
 ```
 
 ### 2. Python 의존성 설치
@@ -105,6 +122,8 @@ python -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
 
 API 문서는 `http://127.0.0.1:8000/docs`에서 확인할 수 있습니다.
 
+RAG 관련 환경변수는 `RAG_CHAT_MODEL`, `RAG_EMBED_MODEL`, `RAG_TOP_K`, `RAG_SCORE_THRESHOLD`입니다. 최초 질문 시 `.rag_index`에 로컬 Chroma 인덱스가 생성되며 지식 문서 내용이 바뀌면 새 버전의 컬렉션을 사용합니다.
+
 ### 4. 웹 화면 실행
 
 새 터미널에서 프로젝트 루트를 기준으로 실행합니다.
@@ -131,3 +150,5 @@ GPU 환경에서는 장치와 연산 방식을 실행 환경에 맞게 변경할
 
 - [개선 TODO](./TODO.md)
 - [LangGraph 전환 계획](./docs/LANGGRAPH_PLAN.md)
+- [RAG 사이드 도우미 구현 계획](./.hermes/plans/2026-09-21_135002-rag-side-assistant.md)
+- [RAG 검색 자료 열람 설계](./docs/RAG_DOCUMENT_VIEWER.md)

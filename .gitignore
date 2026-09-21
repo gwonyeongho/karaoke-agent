@@ -17,6 +17,7 @@ venv/
 .ruff_cache/
 .coverage
 htmlcov/
+.rag_index/
 
 # IDE and OS
 .vscode/

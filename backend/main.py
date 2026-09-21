@@ -7,9 +7,12 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from langchain_ollama import ChatOllama
+from backend.rag.api import router as rag_router
 
-# STT
-from faster_whisper import WhisperModel
+from threading import Lock
+
+_whisper_lock = Lock()
+_whisper_model = None
 
 
 # ----------------------------
@@ -159,16 +162,25 @@ WHISPER_MODEL_NAME = os.getenv("WHISPER_MODEL", "small")
 WHISPER_DEVICE = os.getenv("WHISPER_DEVICE", "cpu")
 WHISPER_COMPUTE = os.getenv("WHISPER_COMPUTE", "int8")
 
-whisper_model = WhisperModel(
-    WHISPER_MODEL_NAME,
-    device=WHISPER_DEVICE,
-    compute_type=WHISPER_COMPUTE,
-)
+def get_whisper_model():
+    """Load Whisper only when STT is first used, preserving existing STT behavior."""
+    global _whisper_model
+    if _whisper_model is None:
+        with _whisper_lock:
+            if _whisper_model is None:
+                from faster_whisper import WhisperModel
+
+                _whisper_model = WhisperModel(
+                    WHISPER_MODEL_NAME,
+                    device=WHISPER_DEVICE,
+                    compute_type=WHISPER_COMPUTE,
+                )
+    return _whisper_model
 
 
 def transcribe_file(path: str, language_hint: Optional[str] = "ko") -> STTResponse:
     # language_hint: "ko" / "en" 등. None이면 자동감지
-    segments, info = whisper_model.transcribe(
+    segments, info = get_whisper_model().transcribe(
         path,
         language=language_hint if language_hint else None,
         vad_filter=True,  # 무음 제거(권장)
@@ -187,6 +199,7 @@ def transcribe_file(path: str, language_hint: Optional[str] = "ko") -> STTRespon
 # FastAPI
 # ----------------------------
 app = FastAPI()
+app.include_router(rag_router)
 
 app.add_middleware(
     CORSMiddleware,
