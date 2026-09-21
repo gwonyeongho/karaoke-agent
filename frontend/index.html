@@ -326,7 +326,7 @@
         <textarea id="ragQuestion" maxlength="500" placeholder="예: 예약한 곡을 취소하려면 어떻게 해?"></textarea>
         <div class="rag-actions">
           <button id="btnRagAsk" class="btn rag-primary" type="submit">문서 검색</button>
-          <button id="btnRagDocuments" class="btn ghost" type="button">검색 자료 보기</button>
+          <button id="btnRagDocuments" class="btn ghost" type="button">전체 검색 자료 보기</button>
         </div>
       </form>
       <div id="ragStatus" class="rag-status" role="status">질문을 입력하면 관련 문서를 검색합니다.</div>
@@ -341,10 +341,10 @@
 
     <dialog id="ragDocumentDialog" class="rag-document-dialog" aria-labelledby="ragDocumentTitle">
       <div class="rag-dialog-head">
-        <div><span class="rag-label">RAG KNOWLEDGE</span><h2 id="ragDocumentTitle">검색 자료</h2></div>
+        <div><span class="rag-label">RAG KNOWLEDGE</span><h2 id="ragDocumentTitle">RAG 검색 대상 전체 문서</h2></div>
         <button id="btnCloseRagDocuments" class="btn ghost" type="button" aria-label="검색 자료 닫기">닫기</button>
       </div>
-      <p class="rag-disclaimer">RAG가 실제로 검색하는 프로젝트 문서 원문입니다.</p>
+      <p id="ragDocumentSummary" class="rag-disclaimer">RAG가 참고할 수 있는 모든 프로젝트 문서 원문입니다.</p>
       <div class="rag-document-layout">
         <nav id="ragDocumentList" class="rag-document-list" aria-label="검색 자료 목록"></nav>
         <article class="rag-document-content">

@@ -702,6 +702,7 @@ const ragDocumentDialog = $("ragDocumentDialog");
 const ragDocumentList = $("ragDocumentList");
 const ragDocumentName = $("ragDocumentName");
 const ragDocumentBody = $("ragDocumentBody");
+const ragDocumentSummary = $("ragDocumentSummary");
 let ragDocuments = [];
 
 async function fetchJson(path, options) {
@@ -716,6 +717,10 @@ async function fetchJson(path, options) {
 
 async function loadRagDocuments() {
   ragDocuments = await fetchJson("/api/v1/rag/documents");
+  safeText(
+    ragDocumentSummary,
+    `RAG가 참고할 수 있는 전체 문서 ${ragDocuments.length}개입니다. 질문별 참조 문서와 관계없이 모두 표시합니다.`,
+  );
   ragDocumentList.replaceChildren();
   if (!ragDocuments.length) {
     const empty = document.createElement("p"); empty.className = "rag-empty";
