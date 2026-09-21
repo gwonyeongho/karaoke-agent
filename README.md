@@ -150,5 +150,6 @@ GPU 환경에서는 장치와 연산 방식을 실행 환경에 맞게 변경할
 
 - [개선 TODO](./TODO.md)
 - [LangGraph 전환 계획](./docs/LANGGRAPH_PLAN.md)
+- [LangChain 및 RAG 기능·처리 흐름](./docs/RAG_LANGCHAIN_FLOW.md)
 - [RAG 사이드 도우미 구현 계획](./.hermes/plans/2026-09-21_135002-rag-side-assistant.md)
 - [RAG 검색 자료 열람 설계](./docs/RAG_DOCUMENT_VIEWER.md)
