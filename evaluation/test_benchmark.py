@@ -1,8 +1,13 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from evaluation.benchmark import (
     answer_has_gold_keywords,
+    build_full_context,
     latency_summary,
+    parse_args,
+    repeated_cases,
     score_command_state,
     score_rag_case,
 )
@@ -95,6 +100,30 @@ class BenchmarkScoringTests(unittest.TestCase):
         self.assertAlmostEqual(summary["average_seconds"], 0.25)
         self.assertAlmostEqual(summary["median_seconds"], 0.25)
         self.assertAlmostEqual(summary["p95_seconds"], 0.4)
+        self.assertAlmostEqual(summary["standard_deviation_seconds"], 0.11180339887498948)
+
+    def test_repeated_cases_assigns_stable_run_numbers(self):
+        cases = [{"id": "a"}, {"id": "b"}]
+        observed = [(run, case["id"]) for run, case in repeated_cases(cases, 3)]
+        self.assertEqual(
+            observed,
+            [(1, "a"), (1, "b"), (2, "a"), (2, "b"), (3, "a"), (3, "b")],
+        )
+
+    def test_qa_generation_has_bounded_default(self):
+        args = parse_args([])
+        self.assertEqual(args.qa_num_predict, 512)
+
+    def test_full_context_contains_all_markdown_documents_with_source_labels(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "a.md").write_text("# A\n첫 문서", encoding="utf-8")
+            (root / "b.md").write_text("# B\n둘째 문서", encoding="utf-8")
+            context = build_full_context(root)
+        self.assertIn("[문서: a.md]", context)
+        self.assertIn("첫 문서", context)
+        self.assertIn("[문서: b.md]", context)
+        self.assertIn("둘째 문서", context)
 
 
 if __name__ == "__main__":

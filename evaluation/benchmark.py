@@ -148,6 +148,7 @@ def latency_summary(values: Iterable[float]) -> dict[str, Any]:
             "average_seconds": None,
             "median_seconds": None,
             "p95_seconds": None,
+            "standard_deviation_seconds": None,
         }
     p95_index = max(0, math.ceil(0.95 * len(samples)) - 1)
     return {
@@ -155,6 +156,7 @@ def latency_summary(values: Iterable[float]) -> dict[str, Any]:
         "average_seconds": statistics.fmean(samples),
         "median_seconds": statistics.median(samples),
         "p95_seconds": samples[p95_index],
+        "standard_deviation_seconds": statistics.pstdev(samples),
     }
 
 
@@ -182,6 +184,25 @@ def case_origin(dataset: dict[str, Any], case: dict[str, Any]) -> dict[str, Any]
     for path, value in case.get("origin_overrides", {}).items():
         nested_set(origin, path, value)
     return origin
+
+
+def repeated_cases(
+    cases: list[dict[str, Any]], repetitions: int
+) -> Iterable[tuple[int, dict[str, Any]]]:
+    if repetitions < 1:
+        raise ValueError("repetitions must be at least 1")
+    for run_index in range(1, repetitions + 1):
+        for case in cases:
+            yield run_index, case
+
+
+def build_full_context(knowledge_dir: Path) -> str:
+    parts = []
+    for path in sorted(knowledge_dir.glob("*.md")):
+        content = path.read_text(encoding="utf-8").strip()
+        if content:
+            parts.append(f"[문서: {path.name}]\n{content}")
+    return "\n\n".join(parts)
 
 
 def command_messages(system_prompt: str, origin: dict[str, Any], command: str) -> list[dict[str, str]]:
@@ -274,10 +295,22 @@ def import_command_components() -> tuple[Any, str]:
     return KaraokeMachine, SYSTEM_PROMPT
 
 
-def make_chat_model(model: str) -> Any:
+def make_chat_model(
+    model: str,
+    timeout: float = 120,
+    num_ctx: int | None = None,
+    num_predict: int | None = None,
+) -> Any:
     from langchain_ollama import ChatOllama
 
-    return ChatOllama(model=model, temperature=0, seed=42)
+    return ChatOllama(
+        model=model,
+        temperature=0,
+        seed=42,
+        num_ctx=num_ctx,
+        num_predict=num_predict,
+        client_kwargs={"timeout": timeout},
+    )
 
 
 def validate_state(schema: Any, value: dict[str, Any] | None) -> tuple[bool, dict[str, Any] | None, str | None]:
@@ -299,11 +332,14 @@ def run_command_pipeline(
     base_url: str,
     timeout: float,
     warmup: bool,
+    repetitions: int,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     schema, system_prompt = import_command_components()
     structured = None
     if pipeline == "structured":
-        structured = make_chat_model(model).with_structured_output(schema, include_raw=True)
+        structured = make_chat_model(model, timeout).with_structured_output(
+            schema, include_raw=True
+        )
 
     def invoke(case: dict[str, Any]) -> tuple[str, dict[str, Any] | None, bool, bool, str | None]:
         origin = case_origin(dataset, case)
@@ -349,7 +385,7 @@ def run_command_pipeline(
             }
 
     records = []
-    for case in cases:
+    for run_index, case in repeated_cases(cases, repetitions):
         origin = case_origin(dataset, case)
         started = time.perf_counter()
         try:
@@ -364,6 +400,7 @@ def run_command_pipeline(
                     "pipeline": pipeline,
                     "model": model,
                     "case_id": case["id"],
+                    "run_index": run_index,
                     "command": case["command"],
                     "origin": origin,
                     "expected_fields": case["expected_fields"],
@@ -384,6 +421,7 @@ def run_command_pipeline(
                     "pipeline": pipeline,
                     "model": model,
                     "case_id": case["id"],
+                    "run_index": run_index,
                     "command": case["command"],
                     "origin": origin,
                     "expected_fields": case["expected_fields"],
@@ -411,13 +449,30 @@ def direct_qa(model: Any, question: str) -> str:
     return str(getattr(result, "content", result)).strip()
 
 
-def build_rag_for_model(model_name: str) -> Any:
+def full_context_qa(model: Any, question: str, context: str) -> str:
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    from backend.rag.service import SYSTEM_PROMPT
+
+    result = model.invoke(
+        [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {
+                "role": "user",
+                "content": f"[전체 문서]\n{context}\n\n[질문]\n{question}",
+            },
+        ]
+    )
+    return str(getattr(result, "content", result)).strip()
+
+
+def build_rag_for_model(model_name: str, timeout: float, num_predict: int) -> Any:
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
     from backend.rag.runtime import build_service
 
     def chat_factory(**_: Any) -> Any:
-        return make_chat_model(model_name)
+        return make_chat_model(model_name, timeout, num_predict=num_predict)
 
     return build_service(chat_factory=chat_factory)
 
@@ -428,14 +483,30 @@ def run_qa_pipeline(
     model_name: str,
     cases: list[dict[str, Any]],
     warmup: bool,
+    repetitions: int,
+    timeout: float,
+    num_predict: int,
 ) -> tuple[list[dict[str, Any]], dict[str, Any], float]:
     setup_started = time.perf_counter()
-    runner = make_chat_model(model_name) if pipeline == "direct" else build_rag_for_model(model_name)
+    full_context = ""
+    if pipeline == "rag":
+        runner = build_rag_for_model(model_name, timeout, num_predict)
+    else:
+        runner = make_chat_model(
+            model_name,
+            timeout,
+            num_ctx=8192 if pipeline == "full_context" else None,
+            num_predict=num_predict,
+        )
+        if pipeline == "full_context":
+            full_context = build_full_context(ROOT / "backend" / "knowledge")
     setup_seconds = time.perf_counter() - setup_started
 
     def invoke(case: dict[str, Any]) -> tuple[str, bool | None, list[dict[str, Any]]]:
         if pipeline == "direct":
             return direct_qa(runner, case["question"]), None, []
+        if pipeline == "full_context":
+            return full_context_qa(runner, case["question"], full_context), None, []
         response = runner.answer(case["question"])
         return (
             response.answer,
@@ -464,7 +535,7 @@ def run_qa_pipeline(
             }
 
     records = []
-    for case in cases:
+    for run_index, case in repeated_cases(cases, repetitions):
         started = time.perf_counter()
         try:
             answer, grounded, sources = invoke(case)
@@ -475,14 +546,17 @@ def run_qa_pipeline(
                 )
             else:
                 expected_refusal = case["expected_refusal"]
+                refusal_detected = NO_EVIDENCE_ANSWER in answer
                 scores = {
                     "answer_correct": None
                     if expected_refusal
                     else answer_has_gold_keywords(answer, case["gold_keyword_groups"]),
                     "retrieval_success": None,
                     "source_correct": None,
-                    "refusal_detected": NO_EVIDENCE_ANSWER in answer,
-                    "refusal_correct": None,
+                    "refusal_detected": refusal_detected,
+                    "refusal_correct": (
+                        refusal_detected if pipeline == "full_context" and expected_refusal else None
+                    ),
                 }
             records.append(
                 {
@@ -490,6 +564,7 @@ def run_qa_pipeline(
                     "pipeline": pipeline,
                     "model": model_name,
                     "case_id": case["id"],
+                    "run_index": run_index,
                     "question": case["question"],
                     "expected_refusal": case["expected_refusal"],
                     "gold_keyword_groups": case["gold_keyword_groups"],
@@ -509,6 +584,7 @@ def run_qa_pipeline(
                     "pipeline": pipeline,
                     "model": model_name,
                     "case_id": case["id"],
+                    "run_index": run_index,
                     "question": case["question"],
                     "expected_refusal": case["expected_refusal"],
                     "latency_seconds": time.perf_counter() - started,
@@ -584,11 +660,17 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
         category, pipeline, model = key.split("/", 2)
         by_model_category[(category, model)][pipeline] = value
     for (category, model), pipelines in by_model_category.items():
-        baseline, enhanced = ("raw", "structured") if category == "command" else ("direct", "rag")
-        if baseline in pipelines and enhanced in pipelines:
+        comparisons = (
+            [("raw", "structured")]
+            if category == "command"
+            else [("direct", "rag"), ("full_context", "rag")]
+        )
+        for baseline, enhanced in comparisons:
+            if baseline not in pipelines or enhanced not in pipelines:
+                continue
             left = pipelines[baseline]["latency"]["average_seconds"]
             right = pipelines[enhanced]["latency"]["average_seconds"]
-            overhead[f"{category}/{model}"] = {
+            overhead[f"{category}/{baseline}_to_{enhanced}/{model}"] = {
                 "baseline": baseline,
                 "comparison": enhanced,
                 "average_seconds_difference": None
@@ -649,8 +731,8 @@ def markdown_report(result: dict[str, Any]) -> str:
         "",
         "## Results",
         "",
-        "| Group | Calls | Primary accuracy | Avg (s) | Median (s) | P95 (s) |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| Group | Calls | Primary accuracy | Avg (s) | Median (s) | StdDev (s) | P95 (s) |",
+        "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for key, summary in result["summary"]["groups"].items():
         primary_key = "command_accuracy" if key.startswith("command/") else "answer_keyword_accuracy"
@@ -659,6 +741,7 @@ def markdown_report(result: dict[str, Any]) -> str:
             f"| `{key}` | {summary['cases']} | {format_rate(summary[primary_key])} | "
             f"{latency['average_seconds'] if latency['average_seconds'] is not None else 'n/a'} | "
             f"{latency['median_seconds'] if latency['median_seconds'] is not None else 'n/a'} | "
+            f"{latency['standard_deviation_seconds'] if latency['standard_deviation_seconds'] is not None else 'n/a'} | "
             f"{latency['p95_seconds'] if latency['p95_seconds'] is not None else 'n/a'} |"
         )
     lines.extend(["", "## Detailed metrics", ""])
@@ -673,9 +756,9 @@ def markdown_report(result: dict[str, Any]) -> str:
             "## Interpretation limits",
             "",
             "- `raw` is Ollama free-form chat; `structured` is the full LangChain `with_structured_output` + Pydantic pipeline. This comparison changes output constraints/client processing and does **not** show that LangChain increases model intelligence.",
-            "- `direct` is plain Qwen generation; `rag` adds Chroma retrieval, score gating, retrieved context, a grounding prompt, and source packaging. Differences cannot be attributed to retrieval alone.",
+            "- `direct` has no project documents. `full_context` receives every project document with the grounding prompt. `rag` receives only retrieved chunks through the production search/gating path. Use full_context versus rag to assess retrieval trade-offs; direct versus rag only demonstrates the value of external project knowledge.",
             "- Keyword checks are deterministic proxies, not semantic grading. Source accuracy checks returned retrieval metadata, not whether the generated prose cites a source inline.",
-            "- One measured run per case is intentionally quick but gives noisy latency estimates; use repeated independent runs for publication-grade timing.",
+            "- Every case is repeated as recorded in metadata. This remains a small local benchmark rather than a publication-grade claim.",
             "- P95 uses the nearest-rank definition over this small sample.",
             "",
             "See the companion JSON for every prompt, output, error, source, state diff, and wall-clock measurement.",
@@ -701,13 +784,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--qa-pipelines",
         nargs="+",
-        choices=["direct", "rag"],
-        default=["direct", "rag"],
+        choices=["direct", "full_context", "rag"],
+        default=["direct", "full_context", "rag"],
     )
     parser.add_argument(
         "--ollama-host", default=os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434")
     )
-    parser.add_argument("--timeout", type=float, default=300)
+    parser.add_argument("--timeout", type=float, default=120)
+    parser.add_argument("--qa-num-predict", type=int, default=512)
+    parser.add_argument("--repetitions", type=int, default=3)
     parser.add_argument("--no-warmup", action="store_true")
     parser.add_argument("--output-prefix", type=Path)
     parser.add_argument(
@@ -724,6 +809,7 @@ def setup_failure_records(
     pipeline: str,
     model: str,
     cases: list[dict[str, Any]],
+    repetitions: int,
     error: Exception,
 ) -> list[dict[str, Any]]:
     """Represent a pipeline setup failure without fabricating call timing/results."""
@@ -734,6 +820,7 @@ def setup_failure_records(
             "pipeline": pipeline,
             "model": model,
             "case_id": case["id"],
+            "run_index": run_index,
             "command" if category == "command" else "question": case[
                 "command" if category == "command" else "question"
             ],
@@ -757,12 +844,16 @@ def setup_failure_records(
                 }
             ),
         }
-        for case in cases
+        for run_index, case in repeated_cases(cases, repetitions)
     ]
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    if args.repetitions < 1:
+        raise ValueError("--repetitions must be at least 1")
+    if args.qa_num_predict < 1:
+        raise ValueError("--qa-num-predict must be at least 1")
     dataset_path = args.dataset.resolve()
     dataset = load_dataset(dataset_path)
     if args.validate_only:
@@ -791,6 +882,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.category in ("all", "command"):
             for pipeline in args.command_pipelines:
                 key = f"command/{pipeline}/{model}"
+                print(f"[START] {key}", flush=True)
                 try:
                     pipeline_records, warmup_result = run_command_pipeline(
                         pipeline=pipeline,
@@ -800,6 +892,7 @@ def main(argv: list[str] | None = None) -> int:
                         base_url=base_url,
                         timeout=args.timeout,
                         warmup=do_warmup,
+                        repetitions=args.repetitions,
                     )
                 except Exception as exc:
                     pipeline_records = setup_failure_records(
@@ -807,6 +900,7 @@ def main(argv: list[str] | None = None) -> int:
                         pipeline=pipeline,
                         model=model,
                         cases=dataset["command_cases"],
+                        repetitions=args.repetitions,
                         error=exc,
                     )
                     warmup_result = {
@@ -815,15 +909,20 @@ def main(argv: list[str] | None = None) -> int:
                     }
                 records.extend(pipeline_records)
                 warmups[key] = warmup_result
+                print(f"[DONE] {key}: {len(pipeline_records)} records", flush=True)
         if args.category in ("all", "qa"):
             for pipeline in args.qa_pipelines:
                 key = f"qa/{pipeline}/{model}"
+                print(f"[START] {key}", flush=True)
                 try:
                     pipeline_records, warmup_result, setup_seconds = run_qa_pipeline(
                         pipeline=pipeline,
                         model_name=model,
                         cases=dataset["qa_cases"],
                         warmup=do_warmup,
+                        repetitions=args.repetitions,
+                        timeout=args.timeout,
+                        num_predict=args.qa_num_predict,
                     )
                     setup_times[key] = setup_seconds
                 except Exception as exc:
@@ -832,6 +931,7 @@ def main(argv: list[str] | None = None) -> int:
                         pipeline=pipeline,
                         model=model,
                         cases=dataset["qa_cases"],
+                        repetitions=args.repetitions,
                         error=exc,
                     )
                     warmup_result = {
@@ -840,6 +940,7 @@ def main(argv: list[str] | None = None) -> int:
                     }
                 records.extend(pipeline_records)
                 warmups[key] = warmup_result
+                print(f"[DONE] {key}: {len(pipeline_records)} records", flush=True)
 
     finished_at = datetime.now(timezone.utc)
     result = {
@@ -853,7 +954,15 @@ def main(argv: list[str] | None = None) -> int:
             "models": args.models,
             "temperature": 0,
             "seed": 42,
-            "measured_runs_per_case": 1,
+            "measured_runs_per_case": args.repetitions,
+            "per_call_timeout_seconds": args.timeout,
+            "qa_num_predict": args.qa_num_predict,
+            "context_windows": {
+                "direct": "Ollama model default",
+                "command": "Ollama model default",
+                "rag": "Ollama model default",
+                "full_context": 8192,
+            },
             "warmup_enabled": do_warmup,
             "warmups": warmups,
             "setup_seconds_excluded_from_case_latency": setup_times,
@@ -874,7 +983,8 @@ def main(argv: list[str] | None = None) -> int:
             "latency": "Client wall time via time.perf_counter; warmups and service/index setup excluded; failures excluded from aggregate latency but retained per case.",
             "confounds": [
                 "Raw Ollama free-form chat versus the full LangChain structured-output and Pydantic pipeline; this does not test whether LangChain increases intelligence.",
-                "Direct QA versus RAG changes retrieval, context, prompting, score gating, and response packaging together.",
+                "Direct QA has no project documents and only shows the value of external knowledge.",
+                "Full-context QA and RAG use the same grounding policy; RAG additionally changes retrieval, score gating, context selection, and source packaging.",
             ],
         },
         "summary": summarize(records),

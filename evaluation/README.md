@@ -6,9 +6,9 @@ This directory contains a small, auditable benchmark for the current command age
 
 - `qwen3:1.7b` and `qwen3:8b` on the same nine command cases.
 - Raw Ollama free-form chat versus the full LangChain `with_structured_output(KaraokeMachine)` + Pydantic pipeline.
-- Plain Qwen informational answers versus the current Chroma/bge-m3/Qwen RAG service on nine questions.
+- Plain Qwen without project documents, Qwen with the complete document corpus, and the current Chroma/bge-m3/Qwen RAG service on the same nine questions.
 
-The raw/structured comparison does **not** claim that LangChain improves model intelligence. It compares different output constraints and client-side processing. Likewise, direct/RAG changes retrieval, context, grounding instructions, score gating, and source packaging together.
+The raw/structured comparison does **not** claim that LangChain improves model intelligence. It compares different output constraints and client-side processing. For RAG, the primary retrieval comparison is full-context Qwen versus RAG because both receive project knowledge under the same grounding policy. Direct Qwen without documents is retained only as an external-knowledge baseline.
 
 ## Requirements
 
@@ -39,7 +39,7 @@ From the repository root:
 python evaluation/benchmark.py
 ```
 
-Default behavior is one excluded warm-up per model/pipeline followed by one measured run per case. Temperature is 0 and the Ollama seed is 42. Results are written to timestamped files under `evaluation/results/`:
+Default behavior is one excluded warm-up per model/pipeline followed by three measured runs per case. Temperature is 0, the Ollama seed is 42, and QA generation is capped at 512 predicted tokens to prevent runaway repetition. The HTTP timeout is 120 seconds, but it is not a total wall-clock deadline while tokens continue streaming. Results are written to timestamped files under `evaluation/results/`:
 
 - JSON: full configuration, environment metadata, per-case outputs/errors/timing/state diffs/sources, and aggregate metrics.
 - Markdown: concise tables and interpretation limits.
@@ -50,8 +50,14 @@ Useful subsets:
 # Commands only, one model
 python evaluation/benchmark.py --category command --models qwen3:1.7b
 
-# RAG and direct QA only
-python evaluation/benchmark.py --category qa --qa-pipelines direct rag
+# No-document, full-context, and RAG QA
+python evaluation/benchmark.py --category qa --qa-pipelines direct full_context rag
+
+# Change the number of measured repetitions
+python evaluation/benchmark.py --repetitions 5
+
+# Change the QA output budget
+python evaluation/benchmark.py --qa-num-predict 768
 
 # Explicit output paths: evaluation/results/my_run.json and .md
 python evaluation/benchmark.py --output-prefix evaluation/results/my_run
@@ -67,6 +73,6 @@ Use `--ollama-host`, `--timeout`, `--command-pipelines`, `--qa-pipelines`, and `
 - **Answer accuracy:** all hand-labeled keyword groups occur; refusal cases are excluded.
 - **Retrieval/source:** answerable RAG cases return grounded sources, and every gold source filename appears in retrieval metadata.
 - **Refusal:** out-of-scope RAG cases return the exact project refusal sentence with `grounded=false` and no sources.
-- **Latency:** per-case client wall time. Average, median, and nearest-rank p95 use successful measured calls only. Warm-ups and RAG construction/index setup are separately recorded and excluded.
+- **Latency:** per-case client wall time. Average, median, population standard deviation, and nearest-rank p95 use successful measured calls only. Warm-ups and RAG construction/index setup are separately recorded and excluded.
 
-Keyword matching is a deterministic proxy rather than semantic grading. Nine cases per category and one measured run keep runtime manageable but are not sufficient for publication-grade latency claims.
+Keyword matching is a deterministic proxy rather than semantic grading. Nine cases per category with three measured runs reduce one-off timing noise but are not sufficient for publication-grade claims.
