@@ -755,7 +755,7 @@ def markdown_report(result: dict[str, Any]) -> str:
         [
             "## Interpretation limits",
             "",
-            "- `raw` is Ollama free-form chat; `structured` is the full LangChain `with_structured_output` + Pydantic pipeline. This comparison changes output constraints/client processing and does **not** show that LangChain increases model intelligence.",
+            "- `raw` is Ollama free-form chat; `structured` is the full LangChain `with_structured_output` + Pydantic pipeline. The comparison measures the end-to-end effect on usable command accuracy and latency.",
             "- `direct` has no project documents. `full_context` receives every project document with the grounding prompt. `rag` receives only retrieved chunks through the production search/gating path. Use full_context versus rag to assess retrieval trade-offs; direct versus rag only demonstrates the value of external project knowledge.",
             "- Keyword checks are deterministic proxies, not semantic grading. Source accuracy checks returned retrieval metadata, not whether the generated prose cites a source inline.",
             "- Every case is repeated as recorded in metadata. This remains a small local benchmark rather than a publication-grade claim.",

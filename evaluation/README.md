@@ -8,7 +8,7 @@ This directory contains a small, auditable benchmark for the current command age
 - Raw Ollama free-form chat versus the full LangChain `with_structured_output(KaraokeMachine)` + Pydantic pipeline.
 - Plain Qwen without project documents, Qwen with the complete document corpus, and the current Chroma/bge-m3/Qwen RAG service on the same nine questions.
 
-The raw/structured comparison does **not** claim that LangChain improves model intelligence. It compares different output constraints and client-side processing. For RAG, the primary retrieval comparison is full-context Qwen versus RAG because both receive project knowledge under the same grounding policy. Direct Qwen without documents is retained only as an external-knowledge baseline.
+The raw/structured comparison measures the end-to-end effect of LangChain structured output and Pydantic validation on usable command accuracy and latency. For RAG, the primary retrieval comparison is full-context Qwen versus RAG because both receive project knowledge under the same grounding policy. Direct Qwen without documents is retained only as an external-knowledge baseline.
 
 ## Requirements
 
