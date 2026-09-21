@@ -49,8 +49,6 @@ LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구
 → 검증된 상태를 웹 화면에 반영
 ```
 
-전체 상태를 LLM이 다시 생성하는 현재 구조의 한계를 보완하기 위해 LangGraph 기반 전환을 계획하고 있습니다. 자세한 내용은 [LangGraph 전환 계획](./docs/LANGGRAPH_PLAN.md)에서 확인할 수 있습니다.
-
 ## 기술 스택
 
 - **Backend:** Python, FastAPI, Pydantic
@@ -72,8 +70,7 @@ LangChain은 모델 자체의 추론 성능을 높이는 용도가 아니라 구
 │   ├── index.html             # 노래방 제어 화면
 │   ├── app.js                 # 상태 관리와 API·음성 입력 연동
 │   └── style.css              # 화면 스타일
-├── docs/
-│   └── LANGGRAPH_PLAN.md      # LangGraph 전환 구현 계획
+├── docs/                      # 기능 설계 및 성능 검증 문서
 ├── README.md
 ├── TODO.md
 └── requirements.txt
@@ -149,7 +146,6 @@ GPU 환경에서는 장치와 연산 방식을 실행 환경에 맞게 변경할
 ## 문서
 
 - [개선 TODO](./TODO.md)
-- [LangGraph 전환 계획](./docs/LANGGRAPH_PLAN.md)
 - [LangChain 및 RAG 기능·처리 흐름](./docs/RAG_LANGCHAIN_FLOW.md)
 - [Qwen3·LangChain·RAG 3회 반복 성능 비교](./docs/PERFORMANCE_BENCHMARK.md)
 - [RAG 사이드 도우미 구현 계획](./.hermes/plans/2026-09-21_135002-rag-side-assistant.md)

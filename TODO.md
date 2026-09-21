@@ -10,16 +10,6 @@
 - [ ] LLM 호출 및 구조화 출력 검증 실패 시 기존 상태를 유지하도록 예외 처리하기
 - [ ] `accepted`와 `changed`를 분리해 정상 멱등 명령과 거부 명령을 구분하기
 
-## LangGraph 전환
-
-- [ ] 전체 `KaraokeMachine` 상태 출력 대신 `CommandDecision`과 action 목록 출력하기
-- [ ] `interpret_command` 노드 구현하기
-- [ ] `validate_actions` 노드 구현하기
-- [ ] `apply_actions` reducer 노드 구현하기
-- [ ] `reject_command`와 `build_response` 노드 구현하기
-- [ ] 조건부 edge로 정상 처리와 거부 경로 분리하기
-- [ ] FastAPI 명령·음성 API를 컴파일된 그래프에 연결하기
-
 ## 검증
 
 - [ ] 명령별 reducer 단위 테스트 작성하기
@@ -35,5 +25,3 @@
 - [ ] 실제 제조사 매뉴얼을 사용하려면 출처·사용 권한 확인 후 별도 추가
 - [ ] 한국어 정답·거부 질문 평가셋 확장 및 검색 임계값 조정
 - [ ] 문서 변경 시 오래된 Chroma 컬렉션 정리 정책 추가
-
-자세한 구현 순서는 [`docs/LANGGRAPH_PLAN.md`](./docs/LANGGRAPH_PLAN.md)를 참고합니다.
