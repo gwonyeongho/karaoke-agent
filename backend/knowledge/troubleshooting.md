@@ -29,10 +29,10 @@ ollama pull qwen3:1.7b
 
 ## RAG 임베딩 모델 오류
 
-문서 검색에는 기본적으로 `nomic-embed-text` 임베딩 모델을 사용한다. 첫 질문에서 임베딩 모델을 찾지 못했다는 오류가 발생하면 다음을 실행한다.
+문서 검색에는 한국어·다국어 검색을 지원하는 `bge-m3` 임베딩 모델을 사용한다. 첫 질문에서 임베딩 모델을 찾지 못했다는 오류가 발생하면 다음을 실행한다.
 
 ```bash
-ollama pull nomic-embed-text
+ollama pull bge-m3
 ollama list
 ```
 

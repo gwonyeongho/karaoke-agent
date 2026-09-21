@@ -732,7 +732,14 @@ async function loadRagDocuments() {
     const title = document.createElement("strong"); title.textContent = doc.title;
     const filename = document.createElement("small"); filename.textContent = doc.filename;
     button.append(title, filename);
-    button.addEventListener("click", () => openRagDocument(doc.id));
+    button.addEventListener("click", async () => {
+      try {
+        await openRagDocument(doc.id);
+      } catch (error) {
+        safeText(ragDocumentName, "문서를 불러오지 못했습니다.");
+        safeText(ragDocumentBody, error.message);
+      }
+    });
     ragDocumentList.append(button);
   });
 }

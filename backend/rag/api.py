@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from .config import KNOWLEDGE_DIR, RAG_CHAT_MODEL, RAG_EMBED_MODEL
 from .documents import get_knowledge_document, knowledge_version, list_knowledge_documents
-from .runtime import RagUnavailableError, get_rag_service
+from .runtime import RagUnavailableError, active_index_versions, get_rag_service
 from .schemas import RagQueryRequest, RagQueryResponse
 
 router = APIRouter(prefix="/api/v1/rag", tags=["RAG"])
@@ -47,6 +47,7 @@ def health():
     return {
         "document_count": len(docs),
         "knowledge_version": knowledge_version(KNOWLEDGE_DIR),
+        "active_index_versions": active_index_versions(),
         "chat_model": RAG_CHAT_MODEL,
         "embedding_model": RAG_EMBED_MODEL,
         "note": "문서 조회는 모델 실행 상태와 독립적입니다.",

@@ -23,6 +23,9 @@ class RagUnavailableError(RuntimeError):
     pass
 
 
+_active_versions: set[str] = set()
+
+
 def build_service(
     *,
     knowledge_dir: Path = KNOWLEDGE_DIR,
@@ -70,6 +73,23 @@ def build_service(
     )
 
 
-@lru_cache(maxsize=1)
+@lru_cache(maxsize=2)
+def _get_rag_service_for_version(version: str) -> RagService:
+    # The version is part of the cache key. When a source document changes,
+    # the next query builds/opens the matching Chroma collection automatically.
+    service = build_service()
+    _active_versions.add(version)
+    return service
+
+
 def get_rag_service() -> RagService:
-    return build_service()
+    return _get_rag_service_for_version(knowledge_version(KNOWLEDGE_DIR))
+
+
+def clear_rag_service_cache() -> None:
+    _get_rag_service_for_version.cache_clear()
+    _active_versions.clear()
+
+
+def active_index_versions() -> list[str]:
+    return sorted(_active_versions)
